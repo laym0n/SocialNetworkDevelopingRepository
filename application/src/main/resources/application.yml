@@ -1,0 +1,6 @@
+spring:
+  datasource:
+    username: user
+    password: pass
+    url: jdbc:postgresql://localhost:5433/social_network
+    driverClassName: org.postgresql.Driver
