@@ -4,3 +4,11 @@ spring:
     password: pass
     url: jdbc:postgresql://localhost:5433/social_network
     driverClassName: org.postgresql.Driver
+  thymeleaf:
+    suffix: .html
+
+#spring.mvc.view.prefix = /WEB-INF/jsp/
+server:
+  servlet:
+    context-path: /
+#    spring.mvc.view.suffix = .jsp

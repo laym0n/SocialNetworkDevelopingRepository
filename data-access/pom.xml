@@ -33,6 +33,13 @@
             <optional>true</optional>
         </dependency>
 
+        <dependency>
+            <groupId>com.example</groupId>
+            <artifactId>bll-social-network</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+
     </dependencies>
 
     <build>

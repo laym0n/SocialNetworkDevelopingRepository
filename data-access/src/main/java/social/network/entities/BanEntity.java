@@ -12,13 +12,14 @@ public class BanEntity {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    @Column(name = "user_id")
-    @JoinColumn(table = "users", referencedColumnName = "user_id", name = "id")
-    private Integer userIdBlocked;
-    @Column(name = "user_blocker_id")
-    @JoinColumn(table = "users", referencedColumnName = "user_id", name = "id", nullable = false)
-    private int idBlocker;
+    private Integer id;
+
+    @ManyToOne
+    @JoinColumn(referencedColumnName = "id", name = "user_id")
+    private UserEntity blockedUser;
+    @ManyToOne
+    @JoinColumn(referencedColumnName = "id", name = "user_blocker_id", nullable = false)
+    private UserEntity blocker;
 
     @Column(nullable = false, name = "description")
     private String description;

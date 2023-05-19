@@ -1,0 +1,16 @@
+package social.network.entities.chat.changeshistory;
+
+public enum ChatChangeEventType {
+    CHAT_CREATED,
+    CHAT_DELETED,
+    CHAT_INFO_CHANGED,
+    MESSAGE_EDITED,
+    NEW_MESSAGE_WAS_SENT,
+    MESSAGE_DELETED,
+    MESSAGE_BLOCKED,
+    MESSAGE_CHECKED,
+    NEW_CHAT_MEMBER_ADDED,
+    CHAT_MEMBER_LEAVED,
+    CHAT_MEMBER_BLOCKED,
+    CHAT_MEMBER_CHANGED_INFO
+}
