@@ -1,8 +1,7 @@
 package dataaccess.usecasestests.chatsusecases;
 
-import dataaccess.jpatest.JPAIntegrationEnvironment;
+import dataaccess.jpa.JPAIntegrationEnvironment;
 import jakarta.persistence.EntityManager;
-import org.checkerframework.checker.units.qual.A;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +18,6 @@ import social.network.dto.requests.EditPrivateChatRequest;
 import social.network.entities.ChatTypeEntity;
 import social.network.entities.PrivateChatEntity;
 import social.network.entities.UserEntity;
-import social.network.entities.UserRoleEntity;
 import social.network.usecases.chatsusecases.ManagePrivateChatsUseCase;
 import static org.junit.jupiter.api.Assertions.*;
 

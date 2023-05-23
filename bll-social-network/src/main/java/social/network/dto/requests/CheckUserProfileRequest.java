@@ -10,4 +10,5 @@ import lombok.NoArgsConstructor;
 public class CheckUserProfileRequest {
     private int idOwnerRequest;
     private int idUserTarget;
+    private int countFriends;
 }

@@ -4,12 +4,13 @@ import social.network.entities.user.User;
 import social.network.entities.user.UserInfo;
 import jakarta.persistence.*;
 import lombok.*;
+import social.network.entities.user.UserProfile;
 import social.network.entities.user.UserRole;
 
+import java.time.LocalDate;
 import java.time.OffsetDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.time.temporal.ChronoUnit;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Entity
@@ -41,11 +42,11 @@ public class UserEntity {
     private byte[] avatar;
 
     @Column(nullable = false, name = "is_blocked")
-    private boolean isBlocked;
+    private boolean isBlocked = false;
     @Column(name = "last_get_updates_time", nullable = false)
-    private OffsetDateTime lastGetUpdatesTime;
+    private OffsetDateTime lastGetUpdatesTime = OffsetDateTime.now();
     @Column(name = "birthday")
-    private OffsetDateTime birthday;
+    private LocalDate birthday;
 
     @EqualsAndHashCode.Exclude
     @ManyToMany(fetch = FetchType.EAGER)
@@ -61,12 +62,9 @@ public class UserEntity {
         this.password = user.getPassword();
         this.firstName = userInfo.getFirstName();
         this.secondName = userInfo.getSecondName();
-        this.avatar = userInfo.getAvatar();
+        this.avatar = userInfo.getAvatar().orElse(null);
         this.isBlocked = user.isBlocked();
         this.lastGetUpdatesTime = user.getLastGetUpdatesTime();
-        roles = user.getRoles().values().stream()
-                .map(userRole -> new UserRoleEntity(userRole))
-                .toList();
     }
     public User getUser(){
         List<UserRole> userRoles =
@@ -82,6 +80,50 @@ public class UserEntity {
                 .build();
         result.setRolesViaList(userRoles);
         return result;
+    }
+    public UserProfile getUserProfile(){
+        return new UserProfile(
+                getUserInfo(),
+                Optional.ofNullable(birthday),
+                null
+        );
+    }
+    public UserInfo getUserInfo(){
+        return UserInfo.builder()
+                .idUser(id)
+                .userName(userName)
+                .firstName(firstName)
+                .secondName(secondName)
+                .avatar(Optional.ofNullable(avatar))
+                .build();
+    }
+    public List<UserRoleEntity> getRoles(){
+        if (roles == null)
+            roles = new ArrayList<>();
+        return roles;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        UserEntity that = (UserEntity) o;
+        return isBlocked() == that.isBlocked()
+                && getId().equals(that.getId())
+                && getUserName().equals(that.getUserName())
+                && getPassword().equals(that.getPassword())
+                && getFirstName().equals(that.getFirstName())
+                && getSecondName().equals(that.getSecondName())
+                && Arrays.equals(getAvatar(), that.getAvatar())
+                && getLastGetUpdatesTime().truncatedTo(ChronoUnit.MINUTES)
+                    .equals(that.getLastGetUpdatesTime().truncatedTo(ChronoUnit.MINUTES))
+                && Objects.equals(getBirthday(), that.getBirthday())
+                && getRoles().equals(that.getRoles());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId());
     }
 }
 

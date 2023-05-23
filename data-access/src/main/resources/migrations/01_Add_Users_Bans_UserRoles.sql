@@ -10,7 +10,7 @@ CREATE TABLE users
     second_name VARCHAR(255)        NOT NULL,
     avatar BYTEA,
     is_blocked BOOLEAN              NOT NULL,
-    birthday TIMESTAMP WITH TIME ZONE,
+    birthday DATE,
     last_get_updates_time TIMESTAMP WITH TIME ZONE NOT NULL
 );
 --rollback drop table users;
@@ -26,7 +26,7 @@ CREATE TABLE roles
 --changeset nvoxland:4
 CREATE TABLE users_roles
 (
-    user_id INTEGER NOT NULL REFERENCES users (id),
+    user_id INTEGER NOT NULL REFERENCES users (id) ON DELETE CASCADE,
     role_id INTEGER NOT NULL REFERENCES roles (id),
     PRIMARY KEY (user_id, role_id)
 );

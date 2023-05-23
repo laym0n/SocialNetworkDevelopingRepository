@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 @Data
 @Builder
@@ -27,7 +28,8 @@ public class SignUpRequest {
         return new User(userName, password, roles);
     }
     public UserInfo getUserInfo(){
-        return new UserInfo(0, userName, userInfoDTO.getFirstName(), userInfoDTO.getSecondName(), userInfoDTO.getAvatar());
+        return new UserInfo(0, userName, userInfoDTO.getFirstName(), userInfoDTO.getSecondName(),
+                Optional.ofNullable(userInfoDTO.getAvatar()), null);
     }
 
 }

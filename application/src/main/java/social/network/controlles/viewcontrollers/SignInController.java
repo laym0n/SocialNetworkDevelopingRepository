@@ -6,21 +6,18 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import social.network.dto.requests.RegistrationRequest;
 import social.network.dto.requests.SignUpRequest;
-import social.network.usecases.usersusecases.SignInUseCase;
+import social.network.usecases.usersusecases.SignUpUseCase;
 
-import javax.validation.Valid;
 import java.io.IOException;
 
 @Component
 @Controller
 @AllArgsConstructor
 public class SignInController {
-    private SignInUseCase signInUseCase;
+    private SignUpUseCase signUpUseCase;
     private PasswordEncoder passwordEncoder;
 
     @GetMapping("/registration")
@@ -34,7 +31,7 @@ public class SignInController {
         SignUpRequest signUpRequest = request.getSignUpRequest();
         signUpRequest.setPassword(passwordEncoder.encode(signUpRequest.getPassword()));
         try {
-            signInUseCase.signUp(signUpRequest);
+            signUpUseCase.signUp(signUpRequest);
         } catch (DuplicateKeyException exception) {
             model.addAttribute("userExists", true);
             model.addAttribute("request", request);

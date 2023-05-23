@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Profile</title>
+  <link rel="icon" type="image/x-icon" href="">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <style>
+    .header-menu {
+      background-color: #bbbaba !important;
+    }
+    .header-menu span {
+      font-weight: normal;
+    }
+    .profile-menu {
+      background-color: #f5f5f5;
+      border-right: 1px solid #e8e8e8;
+      height: 100vh;
+    }
+    .profile-info {
+      padding: 20px;
+    }
+    .profile-avatar {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+    .profile-name {
+      font-size: 24px;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+    .profile-details {
+      margin-top: 10px;
+    }
+    .profile-details span {
+      font-weight: bold;
+    }
+    .profile-update-button {
+      margin-top: 20px;
+    }
+    .profile-update-button a {
+      color: #fff;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+<nav class="navbar sticky-top navbar-light bg-light header-menu">
+  <div class="container container-fluid header-con">
+    <h3>
+      <span class="h1">&nbsp;</span>
+    </h3>
+  </div>
+</nav>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-3 profile-menu">
+      <ul class="nav flex-column">
+        <li class="nav-item">
+          <a class="nav-link" href="/profile">Profile</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/friends">Friends</a>
+        </li>
+      </ul>
+    </div>
+    <div class="col-md-9 profile-info">
+      <img
+              th:src="|data:image/png;base64,${avatar64}|"
+           alt="Avatar">
+      <h1 class="profile-name" th:text="${response.firstName + ' ' + response.secondName}"></h1>
+      <div class="profile-details">
+        <span>Date of Birth:</span> <span th:text="${response.birthday}"></span><br>
+        <!-- Добавьте другие детали профиля -->
+      </div>
+      <div class="profile-update-button">
+        <a class="btn btn-primary" href="/profile/update">Update Profile</a>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+</html>

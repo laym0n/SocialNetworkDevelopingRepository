@@ -1,24 +1,34 @@
 package social.network.dto.responses;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import social.network.entities.user.UserProfile;
 
-import java.time.OffsetDateTime;
+import java.time.LocalDate;
 
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class CheckUserProfileResponse {
     private int idUser;
-    private String username;
+    private String userName;
     private String firstName;
     private String secondName;
     private byte[] avatar;
-    private OffsetDateTime birthday;
+    private LocalDate birthday;
+    private boolean isFriend;
+    private boolean isCurrentUserInBlackList;
+    private boolean isOwnerProfileInBlackList;
+//    private boolean
     public CheckUserProfileResponse(UserProfile userProfile) {
         this.idUser = userProfile.getOwner().getIdUser();
-        this.username = userProfile.getOwner().getUserName();
+        this.userName = userProfile.getOwner().getUserName();
         this.firstName = userProfile.getOwner().getFirstName();
         this.secondName = userProfile.getOwner().getSecondName();
-        this.avatar = userProfile.getOwner().getAvatar();
-        this.birthday = userProfile.getBirthday();
+//        this.avatar = userProfile.getOwner().getAvatar();
+//        this.birthday = userProfile.getBirthday();
     }
 }

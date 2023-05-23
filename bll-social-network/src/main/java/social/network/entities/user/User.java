@@ -1,9 +1,6 @@
 package social.network.entities.user;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.OffsetDateTime;
 import java.util.List;
@@ -18,9 +15,10 @@ public class User {
     private int id;
     private String userName;
     private String password;
-    private Map<Integer, UserRole> roles;
     protected boolean isBlocked = false;
+    @EqualsAndHashCode.Exclude
     private OffsetDateTime lastGetUpdatesTime = OffsetDateTime.now();
+    private Map<Integer, UserRole> roles;
 
     public User(String userName, String password, Map<Integer, UserRole> roles) {
         this.userName = userName;
