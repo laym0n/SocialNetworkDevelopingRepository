@@ -9,16 +9,16 @@ import org.junit.jupiter.params.provider.ArgumentsSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
-import social.network.dao.UserDAO;
-import social.network.entities.UserEntity;
+import social.network.entities.user.PersonalInfo;
+import social.network.jpa.dao.UserDAO;
+import social.network.jpa.entities.UserEntity;
 import social.network.entities.user.UserInfo;
 import social.network.entities.user.UserProfile;
-import social.network.implbllservices.usersservices.EditUserProfileDAServiceImpl;
+import social.network.jpa.implbllservices.usersservices.EditUserProfileDAServiceImpl;
 
 import static org.junit.jupiter.api.Assertions.*;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
-import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
 
@@ -32,14 +32,13 @@ public class EditUserProfileDAServiceTest extends JPAIntegrationEnvironment {
     @ArgumentsSource(ValidUpdateProfileArguments.class)
     @Transactional
     @Rollback
-    void testValidUpdateProfile(UserEntity userForSave, UserProfile userProfileForUpdate, UserEntity expectedEntity){
+    void testValidUpdateProfile(UserEntity userForSave, PersonalInfo argumentForSUT, UserEntity expectedEntity){
         //Assign
-        userForSave = userDAO.save(userForSave);
+        userForSave = userDAO.create(userForSave);
         expectedEntity.setId(userForSave.getId());
-        userProfileForUpdate.getOwner().setIdUser(userForSave.getId());
 
         //Action
-        SUT.updateUserProfileWithoutAvatar(userProfileForUpdate);
+        SUT.updatePersonalInfo(userForSave.getId(), argumentForSUT);
 
         //Assert
         Optional<UserEntity> resultFromDB = userDAO.findById(userForSave.getId());
@@ -51,13 +50,13 @@ public class EditUserProfileDAServiceTest extends JPAIntegrationEnvironment {
     @ArgumentsSource(ValidUpdateAvatarArguments.class)
     @Transactional
     @Rollback
-    void testValidUpdateAvatar(UserEntity userForSave, byte[] newAvatar, UserEntity expectedEntity){
+    void testValidUpdateAvatar(UserEntity userForSave, Optional<byte[]> argumentForSUT, UserEntity expectedEntity){
         //Assign
-        userForSave = userDAO.save(userForSave);
+        userForSave = userDAO.create(userForSave);
         expectedEntity.setId(userForSave.getId());
 
         //Action
-        SUT.updateAvatarUser(userForSave.getId(), newAvatar);
+        SUT.updateAvatarUser(userForSave.getId(), argumentForSUT);
 
         //Assert
         Optional<UserEntity> resultFromDB = userDAO.findById(userForSave.getId());
@@ -82,20 +81,11 @@ public class EditUserProfileDAServiceTest extends JPAIntegrationEnvironment {
                                 .birthday(null)
                                 .avatar(new byte[] {1, 2, 3, 4})
                                 .build(),
-                        UserProfile
+                        PersonalInfo
                                 .builder()
                                 .birthday(Optional.of(newBirthday))
-                                .profileNewsFeed(null)
-                                .owner(
-                                        UserInfo
-                                                .builder()
-                                                .userName("userName")
-                                                .firstName("firstName1")
-                                                .secondName("secondName1")
-                                                .avatar(Optional.of(new byte[] { 1 }))
-                                                .lastGetUpdate(OffsetDateTime.now())
-                                                .build()
-                                )
+                                .firstName("firstName1")
+                                .secondName("secondName1")
                                 .build(),
                         UserEntity
                                 .builder()
@@ -120,7 +110,6 @@ public class EditUserProfileDAServiceTest extends JPAIntegrationEnvironment {
             Arguments firstArguments;
             {
                 OffsetDateTime lastGetUpdateTime = OffsetDateTime.now().minusDays(5);
-                LocalDate newBirthday = LocalDate.now().minusDays(5);
                 firstArguments = Arguments.of(
                         UserEntity
                                 .builder()
@@ -132,7 +121,7 @@ public class EditUserProfileDAServiceTest extends JPAIntegrationEnvironment {
                                 .birthday(null)
                                 .avatar(new byte[] {1, 2, 3, 4})
                                 .build(),
-                        new byte[] { 1 },
+                        Optional.of(new byte[] { 1 }),
                         UserEntity
                                 .builder()
                                 .userName("userName")
@@ -145,8 +134,36 @@ public class EditUserProfileDAServiceTest extends JPAIntegrationEnvironment {
                                 .build()
                 );
             }
+            Arguments secondArguments;
+            {
+                OffsetDateTime lastGetUpdateTime = OffsetDateTime.now().minusDays(5);
+                secondArguments = Arguments.of(
+                        UserEntity
+                                .builder()
+                                .userName("userName")
+                                .password("password")
+                                .firstName("firstName")
+                                .secondName("secondName")
+                                .lastGetUpdatesTime(lastGetUpdateTime)
+                                .birthday(null)
+                                .avatar(new byte[] { 1 })
+                                .build(),
+                        Optional.ofNullable(null),
+                        UserEntity
+                                .builder()
+                                .userName("userName")
+                                .password("password")
+                                .firstName("firstName")
+                                .secondName("secondName")
+                                .lastGetUpdatesTime(lastGetUpdateTime)
+                                .birthday(null)
+                                .avatar(null)
+                                .build()
+                );
+            }
             return Stream.of(
-                    firstArguments
+                    firstArguments,
+                    secondArguments
             );
         }
     }

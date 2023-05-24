@@ -3,7 +3,7 @@ package social.network.daservices;
 import social.network.entities.usersrelationships.friends.FriendRequest;
 
 public interface ManageFriendsRequestsDAService {
-    void saveFriendRequestAndCheckIfAlreadyExists(FriendRequest friendRequest);
+    void createFriendRequestAndCheckIfAlreadyExists(FriendRequest friendRequest);
 
     void deleteFriendRequest(FriendRequest friendRequest);
 

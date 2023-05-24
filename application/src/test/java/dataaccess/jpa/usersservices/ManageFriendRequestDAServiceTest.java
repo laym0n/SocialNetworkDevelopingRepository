@@ -4,24 +4,23 @@ import dataaccess.jpa.JPAIntegrationEnvironment;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DuplicateKeyException;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
-import social.network.dao.FriendDAO;
-import social.network.dao.FriendRequestDAO;
-import social.network.dao.UserDAO;
-import social.network.dao.UsersBlackListDAO;
-import social.network.entities.BlackListUserEntity;
-import social.network.entities.FriendEntity;
-import social.network.entities.FriendRequestEntity;
-import social.network.entities.UserEntity;
-import social.network.entities.ids.BlackListUserEntityId;
-import social.network.entities.ids.FriendEntityId;
-import social.network.entities.ids.FriendRequestEntityId;
+import social.network.jpa.dao.FriendDAO;
+import social.network.jpa.dao.FriendRequestDAO;
+import social.network.jpa.dao.UserDAO;
+import social.network.jpa.dao.UsersBlackListDAO;
+import social.network.jpa.entities.BlackListUserEntity;
+import social.network.jpa.entities.FriendEntity;
+import social.network.jpa.entities.FriendRequestEntity;
+import social.network.jpa.entities.UserEntity;
+import social.network.jpa.entities.ids.BlackListUserEntityId;
+import social.network.jpa.entities.ids.FriendEntityId;
+import social.network.jpa.entities.ids.FriendRequestEntityId;
 import social.network.entities.usersrelationships.friends.FriendRequest;
 import social.network.exceptions.EntityAlreadyExistsException;
 import social.network.exceptions.EntityNotFoundException;
-import social.network.implbllservices.usersservices.ManageFriendRequestsDAServiceImpl;
+import social.network.jpa.implbllservices.usersservices.JPAManageFriendRequestsDAService;
 
 import java.time.OffsetDateTime;
 import java.time.temporal.ChronoUnit;
@@ -31,7 +30,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class ManageFriendRequestDAServiceTest extends JPAIntegrationEnvironment {
     @Autowired
-    private ManageFriendRequestsDAServiceImpl SUT;
+    private JPAManageFriendRequestsDAService SUT;
     @Autowired
     private UserDAO userDAO;
     @Autowired
@@ -53,7 +52,7 @@ public class ManageFriendRequestDAServiceTest extends JPAIntegrationEnvironment 
                 .lastGetUpdatesTime(OffsetDateTime.now())
                 .isBlocked(false)
                 .build();
-        firstUser = userDAO.save(firstUser);
+        firstUser = userDAO.create(firstUser);
         secondUser = UserEntity.builder()
                 .userName("second")
                 .password("password")
@@ -62,7 +61,7 @@ public class ManageFriendRequestDAServiceTest extends JPAIntegrationEnvironment 
                 .lastGetUpdatesTime(OffsetDateTime.now())
                 .isBlocked(false)
                 .build();
-        secondUser = userDAO.save(secondUser);
+        secondUser = userDAO.create(secondUser);
     }
 
     @Test
@@ -78,7 +77,7 @@ public class ManageFriendRequestDAServiceTest extends JPAIntegrationEnvironment 
                 .build();
 
         //Action
-        SUT.saveFriendRequestAndCheckIfAlreadyExists(request);
+        SUT.createFriendRequestAndCheckIfAlreadyExists(request);
 
         //Assert
         Optional<FriendRequestEntity> resultFromDB = friendRequestDAO.findById(
@@ -99,10 +98,10 @@ public class ManageFriendRequestDAServiceTest extends JPAIntegrationEnvironment 
                 .idUserToWhom(secondUser.getId())
                 .whenSent(whenSent)
                 .build();
-        SUT.saveFriendRequestAndCheckIfAlreadyExists(request);
+        SUT.createFriendRequestAndCheckIfAlreadyExists(request);
 
         //Action
-        assertThrows(EntityAlreadyExistsException.class, () -> SUT.saveFriendRequestAndCheckIfAlreadyExists(request));
+        assertThrows(EntityAlreadyExistsException.class, () -> SUT.createFriendRequestAndCheckIfAlreadyExists(request));
     }
 
     @Test
@@ -116,7 +115,7 @@ public class ManageFriendRequestDAServiceTest extends JPAIntegrationEnvironment 
                 .idUserToWhom(secondUser.getId())
                 .whenSent(whenSent)
                 .build();
-        SUT.saveFriendRequestAndCheckIfAlreadyExists(requestFromOther);
+        SUT.createFriendRequestAndCheckIfAlreadyExists(requestFromOther);
         FriendRequest request = FriendRequest.builder()
                 .idUserSender(firstUser.getId())
                 .idUserToWhom(secondUser.getId())
@@ -124,7 +123,7 @@ public class ManageFriendRequestDAServiceTest extends JPAIntegrationEnvironment 
                 .build();
 
         //Action
-        assertThrows(EntityAlreadyExistsException.class, () -> SUT.saveFriendRequestAndCheckIfAlreadyExists(request));
+        assertThrows(EntityAlreadyExistsException.class, () -> SUT.createFriendRequestAndCheckIfAlreadyExists(request));
     }
 
     @Test
@@ -136,7 +135,7 @@ public class ManageFriendRequestDAServiceTest extends JPAIntegrationEnvironment 
                 .id(new FriendEntityId(firstUser.getId(), secondUser.getId()))
                 .whenBecameFriends(OffsetDateTime.now())
                 .build();
-        friendDAO.save(friendEntityForSave);
+        friendDAO.create(friendEntityForSave);
 
         //Action
         boolean resultFromSUT = SUT.isExistFriendRelationship(firstUser.getId(), secondUser.getId());
@@ -154,7 +153,7 @@ public class ManageFriendRequestDAServiceTest extends JPAIntegrationEnvironment 
                 .id(new FriendEntityId(secondUser.getId(), firstUser.getId()))
                 .whenBecameFriends(OffsetDateTime.now())
                 .build();
-        friendDAO.save(friendEntityForSave);
+        friendDAO.create(friendEntityForSave);
 
         //Action
         boolean resultFromSUT = SUT.isExistFriendRelationship(firstUser.getId(), secondUser.getId());
@@ -187,7 +186,7 @@ public class ManageFriendRequestDAServiceTest extends JPAIntegrationEnvironment 
                 .idUserToWhom(secondUser.getId())
                 .whenSent(whenSent)
                 .build();
-        SUT.saveFriendRequestAndCheckIfAlreadyExists(request);
+        SUT.createFriendRequestAndCheckIfAlreadyExists(request);
 
 
         //Action
@@ -233,7 +232,7 @@ public class ManageFriendRequestDAServiceTest extends JPAIntegrationEnvironment 
                 .id(new BlackListUserEntityId(firstUser.getId(), secondUser.getId()))
                 .whenBlocked(OffsetDateTime.now())
                 .build();
-        usersBlackListDAO.save(blackListUserEntity);
+        usersBlackListDAO.create(blackListUserEntity);
 
         //Action
         boolean resultFromSUT = SUT.isBlackListRelationshipExistBetweenUsers(firstUser.getId(), secondUser.getId());
@@ -263,7 +262,7 @@ public class ManageFriendRequestDAServiceTest extends JPAIntegrationEnvironment 
                 .idUserToWhom(secondUser.getId())
                 .whenSent(whenSent)
                 .build();
-        SUT.saveFriendRequestAndCheckIfAlreadyExists(request);
+        SUT.createFriendRequestAndCheckIfAlreadyExists(request);
 
         //Action
         SUT.checkAndDeleteFriendRequestAndCreateFriend(request);

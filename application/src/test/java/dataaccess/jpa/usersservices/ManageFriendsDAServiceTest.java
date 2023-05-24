@@ -7,12 +7,12 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
-import social.network.dao.FriendDAO;
-import social.network.dao.UserDAO;
-import social.network.entities.FriendEntity;
-import social.network.entities.UserEntity;
-import social.network.entities.ids.FriendEntityId;
-import social.network.implbllservices.usersservices.ManageFriendsDAServiceImpl;
+import social.network.jpa.dao.FriendDAO;
+import social.network.jpa.dao.UserDAO;
+import social.network.jpa.entities.FriendEntity;
+import social.network.jpa.entities.UserEntity;
+import social.network.jpa.entities.ids.FriendEntityId;
+import social.network.jpa.implbllservices.usersservices.JPAManageFriendsDAService;
 
 import java.time.OffsetDateTime;
 import java.util.Optional;
@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class ManageFriendsDAServiceTest extends JPAIntegrationEnvironment {
     @Autowired
-    private ManageFriendsDAServiceImpl SUT;
+    private JPAManageFriendsDAService SUT;
     @Autowired
     private UserDAO userDAO;
     @Autowired
@@ -39,7 +39,7 @@ public class ManageFriendsDAServiceTest extends JPAIntegrationEnvironment {
                 .lastGetUpdatesTime(OffsetDateTime.now())
                 .isBlocked(false)
                 .build();
-        firstUser = userDAO.save(firstUser);
+        firstUser = userDAO.create(firstUser);
         secondUser = UserEntity.builder()
                 .userName("second")
                 .password("password")
@@ -48,7 +48,7 @@ public class ManageFriendsDAServiceTest extends JPAIntegrationEnvironment {
                 .lastGetUpdatesTime(OffsetDateTime.now())
                 .isBlocked(false)
                 .build();
-        secondUser = userDAO.save(secondUser);
+        secondUser = userDAO.create(secondUser);
     }
     @Test
     @Rollback
@@ -59,7 +59,7 @@ public class ManageFriendsDAServiceTest extends JPAIntegrationEnvironment {
                 .id(new FriendEntityId(secondUser.getId(), firstUser.getId()))
                 .whenBecameFriends(OffsetDateTime.now())
                 .build();
-        friendDAO.save(friendEntityForSave);
+        friendDAO.create(friendEntityForSave);
 
         //Action
         SUT.deleteFriendRelationShipWithUsers(secondUser.getId(), firstUser.getId());

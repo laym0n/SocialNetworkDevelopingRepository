@@ -1,11 +1,11 @@
 package social.network.daservices;
 
-import social.network.entities.user.UserProfile;
+import social.network.entities.user.PersonalInfo;
 
-import javax.security.auth.login.AccountNotFoundException;
+import java.util.Optional;
 
 public interface EditUserProfileDAService {
-    void updateUserProfileWithoutAvatar(UserProfile userProfile);
+    void updatePersonalInfo(int idUser, PersonalInfo updatedPersonalInfo);
 
-    void updateAvatarUser(int userId, byte[] newAvatar);
+    void updateAvatarUser(int userId, Optional<byte[]> newAvatar);
 }

@@ -32,7 +32,7 @@ public class ManageFriendRequestUseCaseImpl implements ManageFriendRequestsUseCa
         if (isUsersInBlackList) {
             throw new UserInBlackListException("Users is in black list of each other");
         }
-        daService.saveFriendRequestAndCheckIfAlreadyExists(request.getFriendRequest());
+        daService.createFriendRequestAndCheckIfAlreadyExists(request.getFriendRequest());
     }
 
     @Override

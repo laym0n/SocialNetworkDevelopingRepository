@@ -2,6 +2,7 @@ package social.network.dto.requests;
 
 import lombok.Builder;
 import social.network.dto.modelsdto.UserInfoDTO;
+import social.network.entities.user.PersonalInfo;
 import social.network.entities.user.User;
 import social.network.entities.user.UserInfo;
 import social.network.entities.user.UserRole;
@@ -20,16 +21,10 @@ import java.util.Optional;
 public class SignUpRequest {
     private String userName;
     private String password;
-    private UserInfoDTO userInfoDTO = new UserInfoDTO();
+    private PersonalInfo personalInfo;
 
     public User getUser() {
-        Map<Integer, UserRole> roles = new HashMap<>();
-        roles.put(UserRole.SIMPLE_USER.getIdGroup(), UserRole.SIMPLE_USER);
-        return new User(userName, password, roles);
-    }
-    public UserInfo getUserInfo(){
-        return new UserInfo(0, userName, userInfoDTO.getFirstName(), userInfoDTO.getSecondName(),
-                Optional.ofNullable(userInfoDTO.getAvatar()), null);
+        return new User(userName, password);
     }
 
 }

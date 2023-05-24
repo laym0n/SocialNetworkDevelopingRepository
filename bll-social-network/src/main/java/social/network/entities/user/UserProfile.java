@@ -16,7 +16,8 @@ import java.util.Optional;
 @NoArgsConstructor
 @Builder
 public class UserProfile {
+    private PersonalInfo personalInfo;
     private UserInfo owner;
-    private Optional<LocalDate> birthday;
+    private Optional<byte[]> avatar;
     private NewsFeed profileNewsFeed;
 }

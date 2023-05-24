@@ -5,11 +5,13 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Optional;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 public class UpdateAvatarRequest {
     private int idOwnerRequest;
-    private byte[] newAvatar;
+    private Optional<byte[]> newAvatar;
 }

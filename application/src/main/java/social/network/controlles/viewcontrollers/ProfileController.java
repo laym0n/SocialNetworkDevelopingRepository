@@ -7,7 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import social.network.dto.requests.CheckUserProfileRequest;
-import social.network.dto.requests.UpdateUserProfileRequest;
+import social.network.dto.requests.UpdatePersonalInfoRequest;
 import social.network.dto.responses.CheckUserProfileResponse;
 import social.network.security.UserSecurity;
 import social.network.usecases.getinfosusecases.CheckUserProfileUseCase;
@@ -63,21 +63,21 @@ public class ProfileController {
     public String showProfileInfo(@AuthenticationPrincipal UserSecurity user,
                                   @ModelAttribute CheckUserProfileResponse response,
                                   Model model) throws AccountNotFoundException {
-        UpdateUserProfileRequest request = UpdateUserProfileRequest.builder()
-                        .firstName(response.getFirstName())
-                        .secondName(response.getSecondName())
-                        .newBirthday(response.getBirthday())
-                        .idOwnerRequest(user.getUserId())
-                        .build();
-        editUserProfileUseCase.updateUserProfile(request);
+//        UpdatePersonalInfoRequest request = UpdatePersonalInfoRequest.builder()
+//                        .firstName(response.getFirstName())
+//                        .secondName(response.getSecondName())
+//                        .newBirthday(response.getBirthday())
+//                        .idOwnerRequest(user.getUserId())
+//                        .build();
+//        editUserProfileUseCase.updatePersonalInfo(request);
         return "redirect:profile";
     }
     @PostMapping("/update")
     public String updateAvatar(@AuthenticationPrincipal UserSecurity user,
-                                    @ModelAttribute UpdateUserProfileRequest request,
+                                    @ModelAttribute UpdatePersonalInfoRequest request,
                                     Model model) throws AccountNotFoundException {
         request.setIdOwnerRequest(user.getUserId());
-        editUserProfileUseCase.updateUserProfile(request);
+        editUserProfileUseCase.updatePersonalInfo(request);
         return "profile";
     }
 }

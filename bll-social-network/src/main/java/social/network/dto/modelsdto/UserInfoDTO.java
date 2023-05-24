@@ -18,11 +18,12 @@ public class UserInfoDTO {
     private byte[] avatar;
     public UserInfoDTO(UserInfo userInfo){
 //        this.avatar = userInfo.getAvatar();
-        this.firstName = userInfo.getFirstName();
-        this.secondName = userInfo.getSecondName();
+//        this.firstName = userInfo.getFirstName();
+//        this.secondName = userInfo.getSecondName();
     }
     public UserInfo getUserInfo(){
-        return new UserInfo(0, "", firstName, secondName, Optional.ofNullable(avatar), null);
+//        return new UserInfo(0, "", firstName, secondName, Optional.ofNullable(avatar), null);
+        return null;
     }
 
 }

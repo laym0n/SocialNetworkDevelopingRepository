@@ -16,8 +16,8 @@ import social.network.configs.SecurityConfig;
 import java.util.logging.Logger;
 
 @SpringBootApplication
-@EnableJpaRepositories(basePackages = {"social.network.dao"})
-@EntityScan(basePackages = {"social.network.entities"})
+@EnableJpaRepositories(basePackages = {"social.network.jpa.jpadao"})
+@EntityScan(basePackages = {"social.network.jpa.entities"})
 @Import(value = {SecurityConfig.class, MvcConfig.class})
 public class SocialNetworkApplication {
     private static Logger log = Logger.getLogger(SocialNetworkApplication.class.getName());

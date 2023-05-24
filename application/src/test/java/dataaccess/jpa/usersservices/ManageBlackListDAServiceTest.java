@@ -6,15 +6,15 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
-import social.network.dao.UserDAO;
-import social.network.dao.UsersBlackListDAO;
-import social.network.entities.BlackListUserEntity;
-import social.network.entities.UserEntity;
-import social.network.entities.ids.BlackListUserEntityId;
+import social.network.jpa.dao.UserDAO;
+import social.network.jpa.dao.UsersBlackListDAO;
+import social.network.jpa.entities.BlackListUserEntity;
+import social.network.jpa.entities.UserEntity;
+import social.network.jpa.entities.ids.BlackListUserEntityId;
 import social.network.entities.usersrelationships.blacklist.BlackListRelationship;
 import social.network.exceptions.EntityAlreadyExistsException;
 import social.network.exceptions.EntityNotFoundException;
-import social.network.implbllservices.usersservices.ManageBlackListDAServiceImpl;
+import social.network.jpa.implbllservices.usersservices.JPAManageBlackListDAService;
 
 import static org.junit.jupiter.api.Assertions.*;
 import java.time.OffsetDateTime;
@@ -23,7 +23,7 @@ import java.util.Optional;
 
 public class ManageBlackListDAServiceTest extends JPAIntegrationEnvironment {
     @Autowired
-    private ManageBlackListDAServiceImpl SUT;
+    private JPAManageBlackListDAService SUT;
     @Autowired
     private UsersBlackListDAO usersBlackListDAO;
     @Autowired
@@ -41,7 +41,7 @@ public class ManageBlackListDAServiceTest extends JPAIntegrationEnvironment {
                 .lastGetUpdatesTime(OffsetDateTime.now())
                 .isBlocked(false)
                 .build();
-        firstUser = userDAO.save(firstUser);
+        firstUser = userDAO.create(firstUser);
         secondUser = UserEntity.builder()
                 .userName("second")
                 .password("password")
@@ -50,7 +50,7 @@ public class ManageBlackListDAServiceTest extends JPAIntegrationEnvironment {
                 .lastGetUpdatesTime(OffsetDateTime.now())
                 .isBlocked(false)
                 .build();
-        secondUser = userDAO.save(secondUser);
+        secondUser = userDAO.create(secondUser);
     }
     @Test
     @Transactional

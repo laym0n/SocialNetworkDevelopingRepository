@@ -9,12 +9,12 @@ import org.junit.jupiter.params.provider.ArgumentsSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
-import social.network.dao.UserDAO;
-import social.network.dao.UserRoleDAO;
+import social.network.jpa.jpadao.JPAUserDAO;
+import social.network.jpa.jpadao.JPAUserRoleDAO;
 import social.network.dto.requests.CheckUserProfileRequest;
 import social.network.dto.responses.CheckUserProfileResponse;
-import social.network.entities.UserEntity;
-import social.network.entities.UserRoleEntity;
+import social.network.jpa.entities.UserEntity;
+import social.network.jpa.entities.UserRoleEntity;
 import social.network.usecases.getinfosusecases.CheckUserProfileUseCase;
 
 import javax.security.auth.login.AccountNotFoundException;
@@ -28,9 +28,9 @@ public class CheckUserProfileUseCaseTest extends JPAIntegrationEnvironment {
     @Autowired
     private CheckUserProfileUseCase SUT;
     @Autowired
-    private UserDAO userDAO;
+    private JPAUserDAO JPAUserDAO;
     @Autowired
-    private UserRoleDAO userRoleDAO;
+    private JPAUserRoleDAO JPAUserRoleDAO;
     @ParameterizedTest
     @ArgumentsSource(ValidArgumentsProviderForLoadProfileForOwner.class)
     @Transactional
@@ -38,9 +38,9 @@ public class CheckUserProfileUseCaseTest extends JPAIntegrationEnvironment {
     public void testValidLoadProfileForOwnerProfile(UserEntity userEntityForSave, CheckUserProfileResponse expectedResult)
             throws AccountNotFoundException {
         //Assign
-        UserRoleEntity simpleUser = userRoleDAO.findByName("SIMPLE_USER");
+        UserRoleEntity simpleUser = JPAUserRoleDAO.findByName("SIMPLE_USER");
         userEntityForSave.getRoles().add(simpleUser);
-        userDAO.save(userEntityForSave);
+        JPAUserDAO.save(userEntityForSave);
         expectedResult.setIdUser(userEntityForSave.getId());
         CheckUserProfileRequest request = new CheckUserProfileRequest(userEntityForSave.getId(), userEntityForSave.getId(), 5);
 

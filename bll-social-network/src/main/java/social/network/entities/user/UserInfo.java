@@ -18,10 +18,6 @@ import java.util.Optional;
 public class UserInfo {
     private int idUser;
     private String userName;
-    private String firstName;
-    private String secondName;
-    private Optional<byte[]> avatar;
-    private OffsetDateTime lastGetUpdate;
 
     @Override
     public boolean equals(Object o) {
@@ -29,12 +25,7 @@ public class UserInfo {
         if (o == null || getClass() != o.getClass()) return false;
         UserInfo userInfo = (UserInfo) o;
         return getIdUser() == userInfo.getIdUser()
-                && getUserName().equals(userInfo.getUserName())
-                && getFirstName().equals(userInfo.getFirstName())
-                && getSecondName().equals(userInfo.getSecondName())
-                && getAvatar().equals(userInfo.getAvatar())
-                && getLastGetUpdate().truncatedTo(ChronoUnit.MINUTES)
-                    .equals(userInfo.getLastGetUpdate().truncatedTo(ChronoUnit.MINUTES));
+                && getUserName().equals(userInfo.getUserName());
     }
 
     @Override

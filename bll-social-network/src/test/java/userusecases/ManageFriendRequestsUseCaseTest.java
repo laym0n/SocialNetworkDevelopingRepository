@@ -38,7 +38,7 @@ public class ManageFriendRequestsUseCaseTest {
 
         //Assert
         ArgumentCaptor<FriendRequest> argumentForDaService = ArgumentCaptor.forClass(FriendRequest.class);
-        verify(daServiceMock).saveFriendRequestAndCheckIfAlreadyExists(argumentForDaService.capture());
+        verify(daServiceMock).createFriendRequestAndCheckIfAlreadyExists(argumentForDaService.capture());
         FriendRequest savedFriendRequest = argumentForDaService.getValue();
         savedFriendRequest.setWhenSent(savedFriendRequest.getWhenSent().truncatedTo(ChronoUnit.MINUTES));
         assertEquals(FriendRequest.builder()

@@ -5,12 +5,11 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.dao.DuplicateKeyException;
-import social.network.dao.UserDAO;
+import social.network.entities.user.PersonalInfo;
+import social.network.jpa.dao.UserDAO;
 import social.network.daservices.SignUpDAService;
-import social.network.entities.UserEntity;
+import social.network.jpa.entities.UserEntity;
 import social.network.entities.user.User;
-import social.network.entities.user.UserInfo;
 import social.network.entities.user.UserRole;
 import social.network.exceptions.EntityAlreadyExistsException;
 
@@ -40,16 +39,14 @@ public class SignUpDAServiceTest extends JPAIntegrationEnvironment {
                 .lastGetUpdatesTime(lastGetUpdate)
                 .roles(roles)
                 .build();
-        byte[] avatar = new byte[] {1, 2, 3, 4};
-        UserInfo userInfoForArgument = UserInfo.builder()
-                .userName("laym0n")
+        PersonalInfo userInfoForArgument = PersonalInfo.builder()
                 .firstName("Victor")
                 .secondName("Kochnev")
-                .avatar(Optional.of(avatar))
+                .birthday(Optional.ofNullable(null))
                 .build();
 
         //Action
-        SUT.createUserWithUserInfo(userForArgument, userInfoForArgument);
+        SUT.createUserWithPersonalInfo(userForArgument, userInfoForArgument);
 
         //Assert
         Optional<UserEntity> resultFromDBById = userDAO.findById(userForArgument.getId());
@@ -57,7 +54,7 @@ public class SignUpDAServiceTest extends JPAIntegrationEnvironment {
         UserEntity userEntityFromDB = resultFromDBById.get();
 
         assertEquals(userForArgument, userEntityFromDB.getUser());
-        assertEquals(userInfoForArgument, userEntityFromDB.getUserInfo());
+        assertEquals(userInfoForArgument, userEntityFromDB.getPersonalInfo());
         Optional<UserEntity> resultFromDBByName = userDAO.findByUserName(userForArgument.getUserName());
         assertEquals(resultFromDBByName, resultFromDBById);
     }
@@ -66,7 +63,7 @@ public class SignUpDAServiceTest extends JPAIntegrationEnvironment {
     @Transactional
     public void signUpWithAlreadyExistedUserNameTest_ExpectedEntityAlreadyExistsException(){
         //Assign
-        userDAO.save(UserEntity.builder()
+        userDAO.create(UserEntity.builder()
                 .isBlocked(false)
                 .userName("laym0n")
                 .password("password")
@@ -86,16 +83,14 @@ public class SignUpDAServiceTest extends JPAIntegrationEnvironment {
                 .lastGetUpdatesTime(lastGetUpdate)
                 .roles(roles)
                 .build();
-        byte[] avatar = new byte[] {1, 2, 3, 4};
-        UserInfo userInfoForArgument = UserInfo.builder()
-                .userName("laym0n")
+        PersonalInfo userInfoForArgument = PersonalInfo.builder()
                 .firstName("Victor")
                 .secondName("Kochnev")
-                .avatar(Optional.ofNullable(avatar))
+                .birthday(Optional.ofNullable(null))
                 .build();
 
         //Action
         assertThrows(EntityAlreadyExistsException.class,
-                () -> SUT.createUserWithUserInfo(userForArgument, userInfoForArgument));
+                () -> SUT.createUserWithPersonalInfo(userForArgument, userInfoForArgument));
     }
 }

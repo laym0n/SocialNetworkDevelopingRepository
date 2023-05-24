@@ -33,13 +33,13 @@ public class RegistrationRequest {
         return SignUpRequest.builder()
                 .userName(userName)
                 .password(password)
-                .userInfoDTO(
-                        UserInfoDTO.builder()
-                                .avatar(avatar.getBytes())
-                                .firstName(firstName)
-                                .secondName(secondName)
-                                .build()
-                )
+//                .userInfoDTO(
+//                        UserInfoDTO.builder()
+//                                .avatar(avatar.getBytes())
+//                                .firstName(firstName)
+//                                .secondName(secondName)
+//                                .build()
+//                )
                 .build();
     }
 

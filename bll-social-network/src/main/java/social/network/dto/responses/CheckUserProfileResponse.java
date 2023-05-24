@@ -26,8 +26,8 @@ public class CheckUserProfileResponse {
     public CheckUserProfileResponse(UserProfile userProfile) {
         this.idUser = userProfile.getOwner().getIdUser();
         this.userName = userProfile.getOwner().getUserName();
-        this.firstName = userProfile.getOwner().getFirstName();
-        this.secondName = userProfile.getOwner().getSecondName();
+//        this.firstName = userProfile.getOwner().getFirstName();
+//        this.secondName = userProfile.getOwner().getSecondName();
 //        this.avatar = userProfile.getOwner().getAvatar();
 //        this.birthday = userProfile.getBirthday();
     }

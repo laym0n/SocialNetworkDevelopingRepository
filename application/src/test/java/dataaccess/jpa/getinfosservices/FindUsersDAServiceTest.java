@@ -9,11 +9,11 @@ import org.junit.jupiter.params.provider.ArgumentsSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
-import social.network.dao.UserDAO;
-import social.network.dao.UserRoleDAO;
+import social.network.jpa.jpadao.JPAUserDAO;
+import social.network.jpa.jpadao.JPAUserRoleDAO;
 import social.network.daservices.FindUsersDAService;
-import social.network.entities.UserEntity;
-import social.network.entities.UserRoleEntity;
+import social.network.jpa.entities.UserEntity;
+import social.network.jpa.entities.UserRoleEntity;
 import social.network.entities.user.UserInfo;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -29,9 +29,9 @@ public class FindUsersDAServiceTest extends JPAIntegrationEnvironment {
     @Autowired
     private FindUsersDAService SUT;
     @Autowired
-    private UserDAO userDAO;
+    private JPAUserDAO JPAUserDAO;
     @Autowired
-    private UserRoleDAO userRoleDAO;
+    private JPAUserRoleDAO JPAUserRoleDAO;
     @ParameterizedTest
     @ArgumentsSource(FindUsersArguments.class)
     @Transactional
@@ -55,10 +55,10 @@ public class FindUsersDAServiceTest extends JPAIntegrationEnvironment {
         assertEquals(expectedInfosSet, resultFromSUTSet);
     }
     private void saveAllUsers(List<UserEntity> usersForSave) {
-        UserRoleEntity simpleUser = userRoleDAO.findByName("SIMPLE_USER");
+        UserRoleEntity simpleUser = JPAUserRoleDAO.findByName("SIMPLE_USER");
         for (UserEntity userEntity : usersForSave){
             userEntity.getRoles().add(simpleUser);
-            userDAO.save(userEntity);
+            JPAUserDAO.save(userEntity);
         }
     }
     static class FindUsersArguments implements ArgumentsProvider {
