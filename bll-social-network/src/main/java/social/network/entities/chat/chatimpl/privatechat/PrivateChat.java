@@ -11,5 +11,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class PrivateChat extends Chat {
     private ChatMember ownerChat;
-    private PrivateChatInfo info;
+    private PrivateChatProfile profile;
 }

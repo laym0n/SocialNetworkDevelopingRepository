@@ -30,16 +30,18 @@ public class User {
         this.roles = getEmptyMap();
     }
 
-    public void setRolesViaList(List<UserRole> newRoles){
+    public void setRolesViaList(List<UserRole> newRoles) {
         roles = newRoles.stream()
-                .collect(Collectors.toMap(UserRole::getIdGroup, i->i));
+                .collect(Collectors.toMap(UserRole::getIdGroup, i -> i));
     }
+
     public Map<Integer, UserRole> getRoles() {
         if (roles == null) {
             roles = getEmptyMap();
         }
         return roles;
     }
+
     private Map<Integer, UserRole> getEmptyMap() {
         return new HashMap<>();
     }

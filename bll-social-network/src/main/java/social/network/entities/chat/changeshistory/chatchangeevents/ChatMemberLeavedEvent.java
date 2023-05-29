@@ -7,7 +7,7 @@ public class ChatMemberLeavedEvent extends ChatChangeEvent {
     private int idChatMember;
 
     public ChatMemberLeavedEvent(int idChatMember) {
-        super(0, ChatChangeEventType.CHAT_MEMBER_LEAVED);
+        super(0);
         this.idChatMember = idChatMember;
     }
 }

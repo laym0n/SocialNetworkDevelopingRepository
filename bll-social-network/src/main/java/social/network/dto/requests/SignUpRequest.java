@@ -22,7 +22,7 @@ public class SignUpRequest {
     private String userName;
     private String password;
     private PersonalInfo personalInfo;
-
+    private Optional<byte[]> avatar;
     public User getUser() {
         return new User(userName, password);
     }

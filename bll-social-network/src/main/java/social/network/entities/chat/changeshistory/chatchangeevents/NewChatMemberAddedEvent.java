@@ -7,7 +7,7 @@ public class NewChatMemberAddedEvent extends ChatChangeEvent {
     private int idNewChatMember;
 
     public NewChatMemberAddedEvent(int idNewChatMember) {
-        super(0, ChatChangeEventType.NEW_CHAT_MEMBER_ADDED);
+        super(0);
         this.idNewChatMember = idNewChatMember;
     }
 }

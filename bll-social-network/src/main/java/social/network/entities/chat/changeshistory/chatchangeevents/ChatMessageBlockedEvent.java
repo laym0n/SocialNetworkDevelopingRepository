@@ -8,7 +8,7 @@ public class ChatMessageBlockedEvent extends ChatChangeEvent {
     private int orderIdMessage;
 
     public ChatMessageBlockedEvent(int chatId, int orderIdMessage) {
-        super(0, ChatChangeEventType.MESSAGE_BLOCKED);
+        super(0);
         this.chatId = chatId;
         this.orderIdMessage = orderIdMessage;
     }

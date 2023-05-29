@@ -12,11 +12,10 @@ import java.util.Optional;
 @AllArgsConstructor
 @NoArgsConstructor
 public abstract class Message {
-    protected int orderIdOfMessage;
+    protected int orderId;
     protected int chatId;
-    protected int orderIdOfChangeEvent;
     protected OffsetDateTime createdAt;
-    protected MessageType messageType;
-    protected Optional<Ban> ban;
+    protected Optional<OffsetDateTime> editedAt;
     protected boolean isBlocked;
+    protected Optional<Integer> idChatMemberOwner;
 }

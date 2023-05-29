@@ -17,15 +17,16 @@ public class CommunicateViaGroupGroupChatUseCaseImpl implements CommunicateViaGr
 
     @Override
     public void sendMessage(SendMessageRequest request) {
-        ChatNewMessageSentEvent event = new ChatNewMessageSentEvent();
-        daService.addEventToChatChangeHistory(event, request.getChatId());
-        Message newSimpleMessage = request.getMessageDTO().getMessage();
-        newSimpleMessage.setOrderIdOfChangeEvent(event.getOrderId());
-        daService
-                .addMessageToChat(
-                        newSimpleMessage,
-                        request.getChatId()
-                );
+        daService.saveMessage(request.getSimpleMessage());
+//        ChatNewMessageSentEvent event = new ChatNewMessageSentEvent();
+//        daService.addEventToChatChangeHistory(event, request.getChatId());
+//        Message newSimpleMessage = request.getMessageDTO().getMessage();
+//        newSimpleMessage.setOrderIdOfChangeEvent(event.getOrderId());
+//        daService
+//                .addMessageToChat(
+//                        newSimpleMessage,
+//                        request.getChatId()
+//                );
     }
 
     @Override

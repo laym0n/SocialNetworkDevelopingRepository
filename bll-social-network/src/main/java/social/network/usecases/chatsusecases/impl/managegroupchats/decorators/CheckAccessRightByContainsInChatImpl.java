@@ -15,32 +15,32 @@ public class CheckAccessRightByContainsInChatImpl implements ManageGroupChatsUse
         manageGroupChatsUseCase.createChat(request);
     }
 
-    @Override
-    public void addChatMember(AddChatMemberRequest request) {
-        checkIfUserIsInChat(request.getIdChat(), request.getIdUserInviter());
-        checkIfUserIsNotInChat(request.getIdChat(), request.getIdNewMember());
-        manageGroupChatsUseCase.addChatMember(request);
-    }
-
-    @Override
-    public void leaveFromChat(LeaveFromChatRequest request) {
-        checkIfUserIsInChat(request.getIdChat(), request.getIdMemberOwnerRequest());
-//        checkIfUserIsInChat(request.getIdChat(), request.getIdMemberForDelete());
-        manageGroupChatsUseCase.leaveFromChat(request);
-    }
-
-    @Override
-    public void editChatMember(EditChatMemberProfileRequest request) {
-        checkIfUserIsInChat(request.getIdChat(), request.getIdChatMemberForEdit());
-        checkIfUserIsInChat(request.getIdChat(), request.getIdMemberRequestOwner());
-        manageGroupChatsUseCase.editChatMember(request);
-    }
-
-    @Override
-    public void editChatInfo(EditChatRequest request) {
-        checkIfUserIsInChat(request.getIdChat(), request.getIdMemberRequestOwner());
-        manageGroupChatsUseCase.editChatInfo(request);
-    }
+//    @Override
+//    public void addChatMember(AddChatMemberRequest request) {
+//        checkIfUserIsInChat(request.getIdChat(), request.getIdUserSenderRequest());
+//        checkIfUserIsNotInChat(request.getIdChat(), request.getIdUserNewMember());
+//        manageGroupChatsUseCase.addChatMember(request);
+//    }
+//
+//    @Override
+//    public void leaveFromChat(LeaveFromChatRequest request) {
+//        checkIfUserIsInChat(request.getIdChat(), request.getIdUserSenderRequest());
+////        checkIfUserIsInChat(request.getIdChat(), request.getIdMemberForDelete());
+//        manageGroupChatsUseCase.leaveFromChat(request);
+//    }
+//
+//    @Override
+//    public void editChatMember(EditChatMemberProfileRequest request) {
+//        checkIfUserIsInChat(request.getIdChat(), request.getIdChatMemberForEdit());
+//        checkIfUserIsInChat(request.getIdChat(), request.getIdMemberRequestOwner());
+//        manageGroupChatsUseCase.editChatMember(request);
+//    }
+//
+//    @Override
+//    public void editChatInfo(UpdateAvatarGroupChatRequest request) {
+//        checkIfUserIsInChat(request.getIdChat(), request.getIdUserSenderRequest());
+//        manageGroupChatsUseCase.editChatInfo(request);
+//    }
 
     private void checkIfUserIsInChat(int idChat, int idUser) {
         boolean isUserInChat = daService.isChatContainsChatMember(idChat, idUser);

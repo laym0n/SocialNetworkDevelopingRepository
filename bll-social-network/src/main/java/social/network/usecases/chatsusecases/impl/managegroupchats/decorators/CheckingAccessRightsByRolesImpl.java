@@ -21,36 +21,36 @@ public class CheckingAccessRightsByRolesImpl implements ManageGroupChatsUseCase 
         manageGroupChatsUseCase.createChat(request);
     }
 
-    @Override
-    public void addChatMember(AddChatMemberRequest request) {
-        manageGroupChatsUseCase.addChatMember(request);
-    }
-
-    @Override
-    public void leaveFromChat(LeaveFromChatRequest request) {
+//    @Override
+//    public void addChatMember(AddChatMemberRequest request) {
+//        manageGroupChatsUseCase.addChatMember(request);
+//    }
+//
+//    @Override
+//    public void leaveFromChat(LeaveFromChatRequest request) {
+////        checkIfFirstUserBiggerThanSecond(
+////                request.getIdMemberOwnerRequest(),
+////                request.getIdMemberForDelete(),
+////                request.getIdChat()
+////        );
+//        manageGroupChatsUseCase.leaveFromChat(request);
+//
+//    }
+//
+//    @Override
+//    public void editChatMember(EditChatMemberProfileRequest request) {
 //        checkIfFirstUserBiggerThanSecond(
-//                request.getIdMemberOwnerRequest(),
-//                request.getIdMemberForDelete(),
+//                request.getIdMemberRequestOwner(),
+//                request.getIdChatMemberForEdit(),
 //                request.getIdChat()
 //        );
-        manageGroupChatsUseCase.leaveFromChat(request);
-
-    }
-
-    @Override
-    public void editChatMember(EditChatMemberProfileRequest request) {
-        checkIfFirstUserBiggerThanSecond(
-                request.getIdMemberRequestOwner(),
-                request.getIdChatMemberForEdit(),
-                request.getIdChat()
-        );
-        manageGroupChatsUseCase.editChatMember(request);
-    }
-
-    @Override
-    public void editChatInfo(EditChatRequest request) {
-        manageGroupChatsUseCase.editChatInfo(request);
-    }
+//        manageGroupChatsUseCase.editChatMember(request);
+//    }
+//
+//    @Override
+//    public void editChatInfo(UpdateAvatarGroupChatRequest request) {
+//        manageGroupChatsUseCase.editChatInfo(request);
+//    }
 
     private void checkIfFirstUserBiggerThanSecond(int idFirst, int idSecond, int idChat) {
         int resultOfCompare = checkIfFirstUserRolesBiggerThanSecond(idFirst, idSecond);

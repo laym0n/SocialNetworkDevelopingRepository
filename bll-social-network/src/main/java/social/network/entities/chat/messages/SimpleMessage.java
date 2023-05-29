@@ -11,9 +11,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SimpleMessage extends Message {
-    private int userId;
     private String text;
     private List<byte[]> images;
-    private OffsetDateTime lastEditTime;
 
 }

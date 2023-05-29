@@ -5,7 +5,7 @@ import social.network.entities.chat.chatimpl.dialog.DialogChat;
 import social.network.entities.chat.messages.Message;
 
 public interface ManageDialogsChatsDAService {
-    boolean checkIfUsersInBlackListsEachOther(int idUserToDialog, int idUserSenderRequest);
+    boolean checkIfUsersInBlackListsEachOther(int firstIdUser, int secondIdUser);
 
-    DialogChat saveDialogChatWithMessageAndSaveEvent(Message message, int idFirstUser, int idSecondUser, ChatCreatedEvent event);
+    void saveDialogChatWithMessageAndSaveEvent(Message message, int idFirstUser, int idSecondUser, ChatCreatedEvent event);
 }

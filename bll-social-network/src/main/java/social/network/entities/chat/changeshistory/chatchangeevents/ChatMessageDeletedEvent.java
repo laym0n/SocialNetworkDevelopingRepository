@@ -9,7 +9,7 @@ public class ChatMessageDeletedEvent extends ChatChangeEvent {
     private int orderIdMessage;
 
     public ChatMessageDeletedEvent(int orderIdMessage) {
-        super(0, ChatChangeEventType.MESSAGE_DELETED);
+        super(0);
         this.orderIdMessage = orderIdMessage;
     }
 }

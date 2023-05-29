@@ -28,4 +28,6 @@ public class ChatMemberEntity {
     private int orderIdOfMessageWhereStartReading;
     @Column(name = "last_order_id_of_checked_message", nullable = false)
     private int lastOrderIdOfCheckedMessage;
+    @Column(name = "group_member_name")
+    private String groupMemberName;
 }

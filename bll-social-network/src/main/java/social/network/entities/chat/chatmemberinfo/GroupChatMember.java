@@ -10,7 +10,7 @@ import java.util.Map;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class GroupChatMember extends UserChatMemberInfo {
+public class GroupChatMember extends UserChatMemberProfile {
     private GroupChatMemberProfile chatMemberProfile;
     private Map<Integer, ChatMemberRole> roles;
     private boolean isActiveMember = true;

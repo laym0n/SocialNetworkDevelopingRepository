@@ -1,15 +1,18 @@
 package social.network.entities.chat;
 
-import social.network.entities.chat.chatmemberinfo.ChatMemberInfo;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
-
-import java.util.Set;
+import lombok.NoArgsConstructor;
+import social.network.entities.socialnetworkuser.SocialNetworkUser;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class ChatMember {
+    private long id;
     private int lastOrderIdOfCheckedMessage;
     private int orderIdOfMessageWhereStartReading;
-    private ChatMemberInfo info;
-    private boolean isBlocked = false;
-    private Set<Integer> orderIdsDeletedMessages;
+    private SocialNetworkUser socialNetworkUser;
 }

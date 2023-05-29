@@ -1,12 +1,11 @@
 package social.network.dto.requests.chat;
 
-import social.network.dto.modelsdto.GroupChatInfoDTO;
 import lombok.Data;
+import social.network.entities.chat.chatimpl.groupchat.GroupChatProfile;
 
 @Data
 public class CreateGroupChatRequest {
-    private int idCUserCreator;
-    private GroupChatInfoDTO groupChatInfoDTO;
-    private String typeOfChat;
+    private int idUserSenderRequest;
+    private GroupChatProfile chatProfile;
     private int[] simpleUsersIds;
 }

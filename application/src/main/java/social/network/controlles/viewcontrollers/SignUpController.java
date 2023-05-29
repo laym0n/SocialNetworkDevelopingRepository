@@ -16,13 +16,12 @@ import java.io.IOException;
 @Component
 @Controller
 @AllArgsConstructor
-public class SignInController {
+public class SignUpController {
     private SignUpUseCase signUpUseCase;
     private PasswordEncoder passwordEncoder;
 
     @GetMapping("/registration")
     public String showRegistrationForm(Model model) {
-//        model.addAttribute("userExists", false);
         model.addAttribute("request", new RegistrationRequest());
         return "registration";
     }

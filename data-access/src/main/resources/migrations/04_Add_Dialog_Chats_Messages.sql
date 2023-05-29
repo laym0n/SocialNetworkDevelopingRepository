@@ -10,16 +10,3 @@ CREATE TABLE dialog_chat
 );
 --rollback drop table event_type;
 
---changeset nvoxland:19
-CREATE TABLE message
-(
-   id SERIAL,
-   chat_id INTEGER NOT NULL REFERENCES chat(id),
-   chat_member_id INTEGER NOT NULL REFERENCES chat_members(id),
-   event_id_when_created INTEGER NOT NULL,
-   text TEXT,
-   images BYTEA,
-   PRIMARY KEY (id, chat_id)
-);
---rollback drop table event;
-

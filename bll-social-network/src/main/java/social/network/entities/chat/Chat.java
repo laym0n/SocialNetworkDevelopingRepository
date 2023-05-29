@@ -15,6 +15,12 @@ import java.util.List;
 public class Chat {
     protected int id;
     protected List<Message> messages = new ArrayList<>();
-    protected List<Ban> bans = new ArrayList<>();
     protected boolean isBlocked = false;
+    protected boolean isActive = true;
+    public List<Message> getMessages() {
+        if (messages == null) {
+            messages = new ArrayList<>();
+        }
+        return messages;
+    }
 }

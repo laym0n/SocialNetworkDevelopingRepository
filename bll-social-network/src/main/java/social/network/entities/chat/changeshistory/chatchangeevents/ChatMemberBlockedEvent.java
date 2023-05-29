@@ -8,7 +8,7 @@ public class ChatMemberBlockedEvent extends ChatChangeEvent {
     private int idUser;
 
     public ChatMemberBlockedEvent(int idChat, int idUser) {
-        super(0, ChatChangeEventType.CHAT_MEMBER_BLOCKED);
+        super(0);
         this.idChat = idChat;
         this.idUser = idUser;
     }

@@ -5,7 +5,7 @@ import social.network.dto.requests.*;
 public interface CommunicateViaGroupChatUseCase {
     void sendMessage(SendMessageRequest request);
 
-    void deleteMessage(DeleteMessageRequest deleteMessageRequest);
+    void deleteMessage(DeleteMessageRequest request);
 
     void editMessage(EditMessageRequest request);
 

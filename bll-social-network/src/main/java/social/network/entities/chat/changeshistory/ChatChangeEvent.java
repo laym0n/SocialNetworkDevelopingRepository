@@ -9,5 +9,4 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public abstract class ChatChangeEvent {
     protected int orderId;
-    protected ChatChangeEventType eventType;
 }

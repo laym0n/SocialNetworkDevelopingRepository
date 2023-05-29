@@ -7,6 +7,6 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class GroupChatMemberProfile extends UserChatMemberInfo {
+public class GroupChatMemberProfile extends UserChatMemberProfile {
     private String chatMemberName;
 }

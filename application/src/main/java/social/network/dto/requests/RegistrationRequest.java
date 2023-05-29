@@ -6,10 +6,12 @@ import lombok.NoArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.multipart.MultipartFile;
 import social.network.dto.modelsdto.UserInfoDTO;
+import social.network.entities.user.PersonalInfo;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import java.io.IOException;
+import java.util.Optional;
 
 @Data
 @Validated
@@ -33,13 +35,15 @@ public class RegistrationRequest {
         return SignUpRequest.builder()
                 .userName(userName)
                 .password(password)
-//                .userInfoDTO(
-//                        UserInfoDTO.builder()
-//                                .avatar(avatar.getBytes())
-//                                .firstName(firstName)
-//                                .secondName(secondName)
-//                                .build()
-//                )
+                .personalInfo(
+                        PersonalInfo
+                                .builder()
+                                .birthday(Optional.ofNullable(null))
+                                .secondName(secondName)
+                                .firstName(firstName)
+                                .build()
+                )
+                .avatar(Optional.ofNullable(avatar == null ? null : avatar.getBytes()))
                 .build();
     }
 

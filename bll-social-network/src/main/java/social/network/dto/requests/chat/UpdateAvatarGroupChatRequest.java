@@ -3,9 +3,11 @@ package social.network.dto.requests.chat;
 import social.network.dto.modelsdto.GroupChatInfoDTO;
 import lombok.Data;
 
+import java.util.Optional;
+
 @Data
-public class EditChatRequest {
-    private int idMemberRequestOwner;
+public class UpdateAvatarGroupChatRequest {
+    private int idUserSenderRequest;
     private int idChat;
-    private GroupChatInfoDTO newGroupChatInfoDTO;
+    private Optional<byte[]> newAvatar;
 }

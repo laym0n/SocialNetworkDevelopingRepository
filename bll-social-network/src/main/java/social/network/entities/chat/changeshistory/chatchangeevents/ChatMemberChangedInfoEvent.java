@@ -9,7 +9,7 @@ public class ChatMemberChangedInfoEvent extends ChatChangeEvent {
     private int idChatMember;
 
     public ChatMemberChangedInfoEvent(int idChatMember) {
-        super(0, ChatChangeEventType.CHAT_MEMBER_CHANGED_INFO);
+        super(0);
         this.idChatMember = idChatMember;
     }
 }

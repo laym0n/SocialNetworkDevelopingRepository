@@ -25,12 +25,13 @@ values
 --changeset nvoxland:19
 CREATE TABLE event
 (
-   id SERIAL,
+   id SERIAL NOT NULL ,
    chat_id INTEGER NOT NULL REFERENCES chat(id),
    event_type_id INTEGER NOT NULL REFERENCES event_type(id),
    chat_member_id INTEGER REFERENCES chat_members(id),
    order_id_message INTEGER,
-   PRIMARY KEY (id, chat_id)
+   PRIMARY KEY (chat_id, id),
+   FOREIGN KEY (chat_id, order_id_message) REFERENCES message(chat_id, order_id)
 );
 --rollback drop table event;
 

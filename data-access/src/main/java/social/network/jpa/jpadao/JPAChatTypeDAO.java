@@ -8,6 +8,7 @@ import social.network.jpa.entities.ChatTypeEntity;
 
 @Repository
 public interface JPAChatTypeDAO extends JpaRepository<ChatTypeEntity, Integer> {
+    ChatTypeEntity findByName(String name);
     @Query("select ct.id from ChatTypeEntity  ct where ct.name = :name")
     int findIdByName(@Param("name") String name);
 }

@@ -11,7 +11,7 @@ import java.util.Optional;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class PrivateChatInfo {
+public class PrivateChatDescription {
     private String name;
-    private Optional<byte[]> avatar;
+    private Optional<String> description;
 }

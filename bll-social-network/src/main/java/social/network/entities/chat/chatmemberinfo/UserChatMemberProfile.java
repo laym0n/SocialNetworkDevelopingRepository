@@ -4,6 +4,6 @@ import social.network.entities.user.UserInfo;
 import lombok.Data;
 
 @Data
-public class UserChatMemberInfo extends ChatMemberInfo {
+public class UserChatMemberProfile extends ChatMemberProfile {
     private UserInfo userInfo;
 }
