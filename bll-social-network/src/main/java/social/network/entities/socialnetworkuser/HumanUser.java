@@ -1,12 +1,14 @@
 package social.network.entities.socialnetworkuser;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import social.network.entities.user.UserInfo;
 import social.network.entities.user.UserRole;
 
 import java.util.Map;
+import java.util.Optional;
 
 @Data
 @AllArgsConstructor

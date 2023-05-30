@@ -17,6 +17,6 @@ public class SignUpUseCaseImpl implements SignUpUseCase {
     public void signUp(SignUpRequest request) {
         User userForSave = request.getUser();
         userForSave.getRoles().put(UserRole.SIMPLE_USER.getIdGroup(), UserRole.SIMPLE_USER);
-        signUpDAService.createUserWithPersonalInfo(userForSave, request.getPersonalInfo());
+        signUpDAService.createUserWithPersonalInfo(userForSave, request.getUserProfile());
     }
 }

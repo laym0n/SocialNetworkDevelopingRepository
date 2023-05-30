@@ -1,5 +1,6 @@
 package social.network.jpa.entities;
 
+import social.network.entities.socialnetworkuser.HumanUser;
 import social.network.entities.user.*;
 import jakarta.persistence.*;
 import lombok.*;
@@ -51,15 +52,15 @@ public class UserEntity {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private List<UserRoleEntity> roles = new ArrayList<>();
 
-    public UserEntity(User user, PersonalInfo personalInfo) {
+    public UserEntity(User user, UserProfile userProfile) {
         this.id = user.getId();
         this.isBlocked = user.isBlocked();
         this.userName = user.getUserName();
         this.password = user.getPassword();
-        this.firstName = personalInfo.getFirstName();
-        this.secondName = personalInfo.getSecondName();
-        this.avatar = null;
-        this.birthday = personalInfo.getBirthday().orElse(null);
+        this.firstName = userProfile.getPersonalInfo().getFirstName();
+        this.secondName = userProfile.getPersonalInfo().getSecondName();
+        this.avatar = userProfile.getAvatar().orElse(null);
+        this.birthday = userProfile.getPersonalInfo().getBirthday().orElse(null);
         this.isBlocked = user.isBlocked();
         this.lastGetUpdatesTime = user.getLastGetUpdatesTime();
     }
@@ -82,14 +83,14 @@ public class UserEntity {
         return new UserProfile(
                 getPersonalInfo(),
                 getUserInfo(),
-                Optional.ofNullable(avatar),
-                null
+                Optional.ofNullable(avatar)
         );
     }
     public UserInfo getUserInfo(){
         return UserInfo.builder()
                 .idUser(id)
                 .userName(userName)
+                .isBlocked(isBlocked)
                 .build();
     }
     public PersonalInfo getPersonalInfo(){
@@ -127,6 +128,17 @@ public class UserEntity {
     @Override
     public int hashCode() {
         return Objects.hash(getId());
+    }
+
+    public HumanUser getHumanUser() {
+        HumanUser humanUser = new HumanUser(
+                getUserInfo(),
+                firstName,
+                secondName,
+                null
+        );
+        humanUser.setAvatar(Optional.ofNullable(avatar));
+        return humanUser;
     }
 }
 

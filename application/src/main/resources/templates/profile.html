@@ -63,21 +63,90 @@
           <a class="nav-link" href="/profile">Profile</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/friends">Friends</a>
+          <a class="nav-link" href="/friend">Friends</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="friendrequest">Friend requests</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/findusers">Find users</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/logout">Logout</a>
         </li>
       </ul>
     </div>
     <div class="col-md-9 profile-info">
-      <img
+      <img width="50" height="50"
               th:src="|data:image/png;base64,${avatar64}|"
            alt="Avatar">
-      <h1 class="profile-name" th:text="${response.firstName + ' ' + response.secondName}"></h1>
+      <h1 class="profile-name" th:text="${response.getUserProfile().personalInfo.firstName + ' ' + response.getUserProfile().personalInfo.secondName}"></h1>
       <div class="profile-details">
-        <span>Date of Birth:</span> <span th:text="${response.birthday}"></span><br>
-        <!-- Добавьте другие детали профиля -->
+        <span th:if="${response.getUserProfile().personalInfo.birthday.isPresent()}">Date of Birth:</span>
+        <span  th:if="${response.getUserProfile().personalInfo.birthday.isPresent()}"
+               th:text="${response.getUserProfile().getPersonalInfo().birthday.get()}"></span><br>
       </div>
-      <div class="profile-update-button">
+      <div class="profile-update-button" th:if="${isUserOwner}">
+        <a class="btn btn-primary" href="/profile/update/avatar">Update Avatar</a>
         <a class="btn btn-primary" href="/profile/update">Update Profile</a>
+      </div>
+      <div class="user-actions-buttons" th:if="${!isUserOwner}">
+        <span th:if="${response.getUserRelationshipDTO().isCurrentUserInBlackList()}">
+          Вы в черном списке этого пользователя
+        </span>
+        <form method="post" th:if="${response.getUserRelationshipDTO().isOwnerProfileInBlackList()}"
+              th:action="@{/blacklist/remove}">
+          <input type="hidden" th:value="${response.getUserProfile().getOwner().getIdUser()}"
+                 name="idUserForRemove">
+          <button type="submit">Удалить из черного списка</button>
+        </form>
+        <form method="post" th:if="${!response.getUserRelationshipDTO().isOwnerProfileInBlackList()}"
+              th:action="@{/blacklist/add}">
+          <input type="hidden" th:value="${response.getUserProfile().getOwner().getIdUser()}"
+            name="idUserForBlock">
+          <button type="submit">Добавить в черный список</button>
+        </form>
+        <form method="post" th:if="${!response.getUserRelationshipDTO().isOwnerProfileInBlackList()
+            && !response.getUserRelationshipDTO().isCurrentUserInBlackList()
+            && !response.getUserRelationshipDTO().isFriend()
+            && !response.getUserRelationshipDTO().isFriendRequestSentFromUserOwnerProfile()
+            && !response.getUserRelationshipDTO().isFriendRequestSentForUserOwnerProfile()}"
+              th:action="@{/friendrequest/send}">
+          <input type="hidden" th:value="${response.getUserProfile().getOwner().getIdUser()}"
+                 name="idUserToWhom">
+          <button type="submit">Отправить запрос в друзья</button>
+        </form>
+        <form method="post" th:if="${response.getUserRelationshipDTO().isFriendRequestSentFromUserOwnerProfile()}"
+              th:action="@{/friendrequest/accept}">
+          <input type="hidden" th:value="${response.getUserProfile().getOwner().getIdUser()}"
+                 name="idUserSenderFriendRequest">
+          <button type="submit">Принять запрос в друзья</button>
+        </form>
+        <form method="post" th:if="${response.getUserRelationshipDTO().isFriendRequestSentFromUserOwnerProfile()}"
+              th:action="@{/friendrequest/cancel}">
+          <input type="hidden" th:value="${response.getUserProfile().getOwner().getIdUser()}"
+                 name="idUserSenderFriendRequest">
+          <button type="submit">Отклонить запрос в друзья</button>
+        </form>
+        <form method="post" th:if="${response.getUserRelationshipDTO().isFriend()}"
+              th:action="@{/friend/delete}">
+          <input type="hidden" th:value="${response.getUserProfile().getOwner().getIdUser()}"
+                 name="idUserFriend">
+          <button type="submit">Удалить друга</button>
+        </form>
+        <form method="post" th:if="${isCurrentUserAdmin && !response.getUserProfile().getOwner().isBlocked()}"
+              th:action="@{/administrate/ban}">
+          <input type="hidden" th:value="${response.getUserProfile().getOwner().getIdUser()}"
+                 name="idUserForBan">
+          <button type="submit">Забанить</button>
+        </form>
+        <span th:if="${response.getUserProfile().getOwner().isBlocked()}">Пользователь забанен</span>
+        <form method="post" th:if="${isCurrentUserAdmin && response.getUserProfile().getOwner().isBlocked()}"
+              th:action="@{/administrate/unban}">
+          <input type="hidden" th:value="${response.getUserProfile().getOwner().getIdUser()}"
+                 name="idUserForUnban">
+          <button type="submit">Разбанить</button>
+        </form>
       </div>
     </div>
   </div>

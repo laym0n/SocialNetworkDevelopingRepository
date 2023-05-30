@@ -1,9 +1,9 @@
 package social.network.daservices;
 
-import social.network.entities.user.UserInfo;
+import social.network.entities.socialnetworkuser.HumanUser;
 
 import java.util.List;
 
 public interface FindUsersDAService {
-    List<UserInfo> findUsersWithFirstNameAndSecondNameContainingSearchString(String searchString);
+    List<HumanUser> findUsersWithFirstNameAndSecondNameContainingSearchString(String searchString);
 }

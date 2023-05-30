@@ -8,6 +8,7 @@ import social.network.jpa.entities.FriendEntity;
 import social.network.jpa.entities.ids.FriendEntityId;
 import social.network.jpa.jpadao.JPAFriendDAO;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -42,5 +43,12 @@ public class FriendDAO {
 
     public Optional<FriendEntity> findFriendEntityWithUsers(Integer firstIdUser, Integer secondIdUser) {
         return jpaFriendDAO.findFriendEntityWithUsers(firstIdUser, secondIdUser);
+    }
+
+    public List<FriendEntityId> findAllWithUser(int idUser) {
+        return entityManager.createQuery("select f.id from FriendEntity f " +
+                "where f.id.firstUserId = :id or f.id.secondUserId = :id")
+                .setParameter("id", idUser)
+                .getResultList();
     }
 }

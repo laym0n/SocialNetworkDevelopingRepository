@@ -3,6 +3,7 @@ package social.network.usecases.getinfosusecases.impl.checkuserprofile;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import social.network.daservices.CheckUserProfileDAService;
+import social.network.dto.UserRelationshipDTO;
 import social.network.dto.requests.CheckUserProfileRequest;
 import social.network.dto.responses.CheckUserProfileResponse;
 import social.network.entities.user.UserInfo;
@@ -19,7 +20,14 @@ public class CheckUserProfileUseCaseImpl implements CheckUserProfileUseCase {
     @Override
     public CheckUserProfileResponse checkUserProfile(CheckUserProfileRequest request) throws AccountNotFoundException {
         UserProfile userProfile = daService.loadUserProfileById(request.getIdUserTarget(), request.getIdOwnerRequest());
-        List<UserInfo> friendInfos = daService.loadFriendWithoutAvatars(request.getCountFriends());
-        return new CheckUserProfileResponse(userProfile);
+        UserRelationshipDTO userRelationshipDTO = new UserRelationshipDTO(
+                daService.isFriendRelationshipExist(request.getIdUserTarget(), request.getIdOwnerRequest()),
+                daService.isFriendRequestExist(request.getIdUserTarget(), request.getIdOwnerRequest()),
+                daService.isFriendRequestExist(request.getIdOwnerRequest(), request.getIdUserTarget()),
+                daService.isUserInBlackListOfOtherUser(request.getIdOwnerRequest(), request.getIdUserTarget()),
+                daService.isUserInBlackListOfOtherUser(request.getIdUserTarget(), request.getIdOwnerRequest()),
+                daService.isDialogChatExistBetweenUsers(request.getIdUserTarget(), request.getIdOwnerRequest())
+        );
+        return new CheckUserProfileResponse(request.getIdUserTarget(), userProfile, userRelationshipDTO);
     }
 }

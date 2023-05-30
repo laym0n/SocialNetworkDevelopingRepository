@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.OffsetDateTime;
 import java.util.Optional;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -18,4 +19,5 @@ public abstract class Message {
     protected Optional<OffsetDateTime> editedAt;
     protected boolean isBlocked;
     protected Optional<Integer> idChatMemberOwner;
+    protected Set<Integer> usersDeletedMessage;
 }

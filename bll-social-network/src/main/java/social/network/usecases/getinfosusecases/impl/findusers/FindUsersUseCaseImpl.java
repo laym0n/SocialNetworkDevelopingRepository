@@ -4,8 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import social.network.daservices.FindUsersDAService;
 import social.network.dto.requests.FindUsersByFirstAndSecondNamesRequest;
-import social.network.dto.responses.FindUserResponse;
-import social.network.entities.user.UserInfo;
+import social.network.entities.socialnetworkuser.HumanUser;
 import social.network.usecases.getinfosusecases.FindUsersUseCase;
 
 import java.util.List;
@@ -15,9 +14,9 @@ import java.util.List;
 public class FindUsersUseCaseImpl implements FindUsersUseCase {
     private FindUsersDAService daService;
     @Override
-    public FindUserResponse findUsersByFirstAndSecondNames(FindUsersByFirstAndSecondNamesRequest request) {
-        List<UserInfo> allUsersWithContainingSearchString = daService
+    public List<HumanUser> findUsersByFirstAndSecondNames(FindUsersByFirstAndSecondNamesRequest request) {
+        List<HumanUser> allUsersWithContainingSearchString = daService
                 .findUsersWithFirstNameAndSecondNameContainingSearchString(request.getSearchString());
-        return new FindUserResponse(allUsersWithContainingSearchString);
+        return allUsersWithContainingSearchString;
     }
 }

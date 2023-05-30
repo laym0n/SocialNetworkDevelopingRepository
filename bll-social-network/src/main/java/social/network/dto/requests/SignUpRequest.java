@@ -2,10 +2,7 @@ package social.network.dto.requests;
 
 import lombok.Builder;
 import social.network.dto.modelsdto.UserInfoDTO;
-import social.network.entities.user.PersonalInfo;
-import social.network.entities.user.User;
-import social.network.entities.user.UserInfo;
-import social.network.entities.user.UserRole;
+import social.network.entities.user.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,8 +18,7 @@ import java.util.Optional;
 public class SignUpRequest {
     private String userName;
     private String password;
-    private PersonalInfo personalInfo;
-    private Optional<byte[]> avatar;
+    private UserProfile userProfile;
     public User getUser() {
         return new User(userName, password);
     }

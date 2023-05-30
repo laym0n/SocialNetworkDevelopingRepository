@@ -8,6 +8,7 @@ import social.network.jpa.entities.FriendRequestEntity;
 import social.network.jpa.entities.ids.FriendRequestEntityId;
 import social.network.jpa.jpadao.JPAFriendRequestDAO;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -56,5 +57,14 @@ public class FriendRequestDAO {
 
     public Optional<FriendRequestEntity> findById(FriendRequestEntityId id) {
         return jpaFriendRequestDAO.findById(id);
+    }
+
+    public boolean isExistById(FriendRequestEntityId id) {
+        return jpaFriendRequestDAO.existsById(id);
+    }
+
+    public List<Integer> findAllToUser(int idUser) {
+        return entityManager.createQuery("select fr.id.userSenderRequestId from FriendRequestEntity fr " +
+                "where fr.id.userToWhomId = :id").setParameter("id", idUser).getResultList();
     }
 }

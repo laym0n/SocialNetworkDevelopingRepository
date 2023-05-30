@@ -12,4 +12,5 @@
     <include file="03_Add_Events.sql"/>
     <include file="04_Add_Dialog_Chats_Messages.sql"/>
     <include file="05_Add_Friends_FriendRequests_BlackLists.sql"/>
+    <include file="06_Add_Admin.sql"/>
 </databaseChangeLog>

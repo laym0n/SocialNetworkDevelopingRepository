@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import social.network.entities.user.PersonalInfo;
+import social.network.entities.user.UserProfile;
 import social.network.jpa.dao.UserDAO;
 import social.network.jpa.dao.UserRoleDAO;
 import social.network.daservices.SignUpDAService;
@@ -19,8 +20,8 @@ public class JPASignUpDAService implements SignUpDAService {
     private UserDAO userDAO;
     private UserRoleDAO userRoleDAO;
     @Override
-    public void createUserWithPersonalInfo(User user, PersonalInfo personalInfo) {
-        UserEntity newUserEntity = new UserEntity(user, personalInfo);
+    public void createUserWithPersonalInfo(User user, UserProfile userProfile) {
+        UserEntity newUserEntity = new UserEntity(user, userProfile);
         for (UserRole userRole : user.getRoles().values()) {
             UserRoleEntity userRoleEntity = userRoleDAO.findByName(userRole.name());
             newUserEntity.getRoles().add(userRoleEntity);
@@ -31,5 +32,6 @@ public class JPASignUpDAService implements SignUpDAService {
             throw new EntityAlreadyExistsException("User with username " + user.getUserName() + " already exists");
         }
         user.setId(newUserEntity.getId());
+        userProfile.getOwner().setIdUser(newUserEntity.getId());
     }
 }

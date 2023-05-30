@@ -18,7 +18,7 @@ import java.util.Optional;
 public class UserInfo {
     private int idUser;
     private String userName;
-
+    private boolean isBlocked;
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

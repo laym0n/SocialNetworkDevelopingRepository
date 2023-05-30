@@ -65,10 +65,10 @@ public class CheckUserProfileUseCaseTest extends JPAIntegrationEnvironment {
                             .lastGetUpdatesTime(OffsetDateTime.now())
                             .build(),
                         CheckUserProfileResponse.builder()
-                                .firstName("Victor")
-                                .secondName("Kochnev")
-                                .userName("laym0n")
-                                .birthday(LocalDate.now().minusDays(5))
+//                                .firstName("Victor")
+//                                .secondName("Kochnev")
+//                                .userName("laym0n")
+//                                .birthday(LocalDate.now().minusDays(5))
                                 .build()
                 );
             }
@@ -85,11 +85,11 @@ public class CheckUserProfileUseCaseTest extends JPAIntegrationEnvironment {
                                 .lastGetUpdatesTime(OffsetDateTime.now())
                                 .build(),
                         CheckUserProfileResponse.builder()
-                                .firstName("Victor")
-                                .secondName("Kochnev")
-                                .userName("laym0n")
-                                .avatar(new byte[] {1, 2, 3, 4,5})
-                                .birthday(LocalDate.now().minusDays(5))
+//                                .firstName("Victor")
+//                                .secondName("Kochnev")
+//                                .userName("laym0n")
+//                                .avatar(new byte[] {1, 2, 3, 4,5})
+//                                .birthday(LocalDate.now().minusDays(5))
                                 .build()
                 );
             }

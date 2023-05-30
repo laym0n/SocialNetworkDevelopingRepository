@@ -1,8 +1,10 @@
 package social.network.usecases.getinfosusecases;
 
 import social.network.dto.requests.FindUsersByFirstAndSecondNamesRequest;
-import social.network.dto.responses.FindUserResponse;
+import social.network.entities.socialnetworkuser.HumanUser;
+
+import java.util.List;
 
 public interface FindUsersUseCase {
-    FindUserResponse findUsersByFirstAndSecondNames(FindUsersByFirstAndSecondNamesRequest request);
+    List<HumanUser> findUsersByFirstAndSecondNames(FindUsersByFirstAndSecondNamesRequest request);
 }

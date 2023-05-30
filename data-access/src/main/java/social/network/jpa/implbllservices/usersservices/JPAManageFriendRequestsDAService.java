@@ -2,6 +2,7 @@ package social.network.jpa.implbllservices.usersservices;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import social.network.jpa.dao.FriendDAO;
 import social.network.jpa.dao.FriendRequestDAO;
 import social.network.jpa.dao.UsersBlackListDAO;
@@ -34,7 +35,7 @@ public class JPAManageFriendRequestsDAService implements ManageFriendsRequestsDA
         FriendRequestEntity newFriendRequestEntity = new FriendRequestEntity(friendRequest);
         friendRequestDAO.create(newFriendRequestEntity);
     }
-
+    @Transactional
     @Override
     public void deleteFriendRequest(FriendRequest friendRequest) {
         friendRequestDAO.deleteAllById(

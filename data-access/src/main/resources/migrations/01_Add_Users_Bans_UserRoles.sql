@@ -9,9 +9,9 @@ CREATE TABLE users
     first_name  VARCHAR(255)        NOT NULL,
     second_name VARCHAR(255)        NOT NULL,
     avatar BYTEA,
-    is_blocked BOOLEAN              NOT NULL,
+    is_blocked BOOLEAN DEFAULT FALSE NOT NULL,
     birthday DATE,
-    last_get_updates_time TIMESTAMP WITH TIME ZONE NOT NULL
+    last_get_updates_time TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL
 );
 --rollback drop table users;
 

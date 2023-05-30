@@ -8,7 +8,10 @@ import social.network.jpa.entities.UserEntity;
 import social.network.jpa.jpadao.JPAUserDAO;
 
 import java.time.LocalDate;
+import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Repository
 @AllArgsConstructor
@@ -48,5 +51,17 @@ public class UserDAO {
     private void detachEntity(int id) {
         UserEntity entity = entityManager.find(UserEntity.class, id);
         entityManager.detach(entity);
+    }
+
+    public void setIsBlocked(int idUser, boolean value) {
+        entityManager.createQuery("update UserEntity u set u.isBlocked = :value " +
+                "where u.id = :id")
+                .setParameter("id", idUser)
+                .setParameter("value", value)
+                .executeUpdate();
+    }
+
+    public List<UserEntity> findAllByIds(Collection<Integer> idsUsers) {
+        return idsUsers.stream().map(i-> jpaUserDAO.findById(i).get()).toList();
     }
 }
