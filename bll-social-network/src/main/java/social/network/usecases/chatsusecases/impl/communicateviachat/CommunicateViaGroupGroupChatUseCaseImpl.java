@@ -45,15 +45,15 @@ public class CommunicateViaGroupGroupChatUseCaseImpl implements CommunicateViaGr
 
     @Override
     public void editMessage(EditMessageRequest request) {
-        checkIfUserIsOwnerOfMessage(request.getIdChat(), request.getMessageDTO().getOrderIdOfChangeEvent(),
-                request.getUserId());
-        ChatMessageEditedEvent event = new ChatMessageEditedEvent(
-                request.getMessageDTO().getOrderIdOfChangeEvent()
-        );
-        daService.updateMessageInChatAndAddEventToChangeHistory(
-                request.getMessageDTO().getMessage(),
-                event
-        );
+//        checkIfUserIsOwnerOfMessage(request.getIdChat(), request.getMessageDTO().getOrderIdOfChangeEvent(),
+//                request.getUserId());
+//        ChatMessageEditedEvent event = new ChatMessageEditedEvent(
+//                request.getMessageDTO().getOrderIdOfChangeEvent()
+//        );
+//        daService.updateMessageInChatAndAddEventToChangeHistory(
+//                request.getMessageDTO().getMessage(),
+//                event
+//        );
     }
 
     @Override

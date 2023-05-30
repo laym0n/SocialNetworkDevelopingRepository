@@ -45,6 +45,10 @@
       color: #fff;
       text-decoration: none;
     }
+    span.required {
+      color: red;
+      margin-left: 5px;
+    }
   </style>
 </head>
 <body>
@@ -76,25 +80,32 @@
         </li>
       </ul>
     </div>
-    <div th:each="user : ${users}">
-      <a th:href="@{/profile/{id}(id=${user.userId})}">
-      <img width="50" height="50"
-           th:src="|data:image/png;base64,${user.avatar}|"
-           alt="Avatar">
-      <span th:text="${user.firstName + ' ' + user.secondName}"></span>
-      </a>
-      <form method="post"
-            th:action="@{/friendrequest/accept}">
-        <input type="hidden" th:value="${user.getUserId()}"
-               name="idUserSenderFriendRequest">
-        <button type="submit">Принять запрос в друзья</button>
-      </form>
-      <form method="post"
-            th:action="@{/friendrequest/cancel}">
-        <input type="hidden" th:value="${user.getUserId()}"
-               name="idUserSenderFriendRequest">
-        <button type="submit">Отклонить запрос в друзья</button>
-      </form>
+    <div class="col-md-9 profile-info">
+        <form method="post" th:object="${request}" enctype="multipart/form-data"
+              th:action="@{/privatechat/create}">
+          <div class="row mb-3">
+            <label for="inputName3" class="col-sm-2 col-form-label">Name<span class="required">*</span></label>
+            <div class="col-sm-10">
+              <input type="text" th:field="*{name}" class="form-control" id="inputName3" required>
+              <!--          <label for="inputPassword3" class="col-sm-10 col-form-label error"></label>-->
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label for="inputDescription3" class="col-sm-2 col-form-label">Description</label>
+            <div class="col-sm-10">
+              <input type="text" th:field="*{description}" class="form-control" id="inputDescription3">
+              <!--          <label for="inputPassword3" class="col-sm-10 col-form-label error"></label>-->
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label for="inputAvatar" class="col-sm-2 col-form-label">Avatar</label>
+            <div class="col-sm-10">
+              <input id="inputAvatar"type="file" name="image" th:field="*{avatar}"accept="image/*" class="form-control-file">
+            </div>
+          </div>
+
+          <button type="submit">Создать чат</button>
+        </form>
     </div>
   </div>
 </div>

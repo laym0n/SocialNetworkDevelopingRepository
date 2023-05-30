@@ -64,7 +64,7 @@ CREATE TABLE group_chat_members_roles (
 
 --changeset nvoxland:14
 CREATE TABLE message (
-    order_id SERIAL,
+    order_id INTEGER NOT NULL,
     chat_id INTEGER NOT NULL REFERENCES chat(id),
     chat_member_id INTEGER REFERENCES chat_members(id),
     text TEXT,

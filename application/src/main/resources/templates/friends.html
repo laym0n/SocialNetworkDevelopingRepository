@@ -77,10 +77,12 @@
       </ul>
     </div>
     <div th:each="user : ${users}">
+      <a th:href="@{/profile/{id}(id=${user.userId})}">
       <img width="50" height="50"
            th:src="|data:image/png;base64,${user.avatar}|"
            alt="Avatar">
       <span th:text="${user.firstName + ' ' + user.secondName}"></span>
+      </a>
       <form method="post"
             th:action="@{/friend/delete}">
         <input type="hidden" th:value="${user.getUserId()}"

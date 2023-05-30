@@ -2,10 +2,7 @@ package social.network.jpa.implbllservices.usersservices;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import social.network.jpa.dao.FriendDAO;
-import social.network.jpa.dao.FriendRequestDAO;
-import social.network.jpa.dao.UserDAO;
-import social.network.jpa.dao.UsersBlackListDAO;
+import social.network.jpa.dao.*;
 import social.network.jpa.entities.ids.BlackListUserEntityId;
 import social.network.jpa.entities.ids.FriendRequestEntityId;
 import social.network.jpa.jpadao.JPAUserDAO;
@@ -25,6 +22,7 @@ public class CheckUserProfileDAServiceImpl implements CheckUserProfileDAService 
     private FriendDAO friendDAO;
     private FriendRequestDAO friendRequestDAO;
     private UsersBlackListDAO usersBlackListDAO;
+    private ChatDAO chatDAO;
 
     @Override
     public UserProfile loadUserProfileById(int idUserTarget, int idOwnerRequest) throws AccountNotFoundException {
@@ -60,5 +58,10 @@ public class CheckUserProfileDAServiceImpl implements CheckUserProfileDAService 
     @Override
     public boolean isDialogChatExistBetweenUsers(int idUserTarget, int idOwnerRequest) {
         return false;
+    }
+
+    @Override
+    public Optional<Integer> findIdDialogChat(int idFirstUser, int idSecondUser) {
+        return chatDAO.findIdDialogChatBetweenUsers(idFirstUser, idSecondUser);
     }
 }

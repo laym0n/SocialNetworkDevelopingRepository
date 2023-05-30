@@ -10,7 +10,6 @@ import social.network.usecases.usersusecases.ManageBlackListUseCase;
 
 import java.security.InvalidParameterException;
 
-@Service
 @AllArgsConstructor
 public class ManageBlackListUseCaseImpl implements ManageBlackListUseCase {
     private ManageBlackListDAService daService;

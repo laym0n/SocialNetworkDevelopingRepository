@@ -4,10 +4,13 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
+import social.network.dto.ChatDescriptionDTO;
 import social.network.jpa.entities.ChatEntity;
 import social.network.jpa.entities.FriendEntity;
 import social.network.jpa.entities.ids.FriendEntityId;
 import social.network.jpa.jpadao.JPAChatDAO;
+
+import java.util.*;
 
 @Repository
 @AllArgsConstructor
@@ -42,5 +45,33 @@ public class ChatDAO {
         if (entity != null) {
             entityManager.detach(entity);
         }
+    }
+
+    public List<ChatEntity> findAllById(Collection<Integer> chatIds) {
+        return chatIds.stream().map(i->jpaChatDAO.findById(i).get()).toList();
+    }
+
+    public ChatEntity findById(int idChat) {
+        return jpaChatDAO.findById(idChat).get();
+    }
+
+    public Optional<Integer> findIdDialogChatBetweenUsers(int idFirstUser, int idSecondUser) {
+        List<Integer> idsDialogChat = entityManager.createQuery("select c.id from ChatEntity c " +
+                "where c.type.name = 'DIALOG_CHAT'").getResultList();
+        Optional<Integer> result = Optional.empty();
+        for (int idChat : idsDialogChat) {
+            Set<Integer> idsMembers = new HashSet<>(entityManager.createQuery("select cm.userId from ChatMemberEntity cm " +
+                    "where cm.chatId = :chatId").setParameter("chatId", idChat)
+                    .getResultList());
+            if (idsMembers.contains(idFirstUser) && idsMembers.contains(idSecondUser)) {
+                result = Optional.of(idChat);
+                break;
+            }
+        }
+        return result;
+    }
+
+    public void updateEntity(ChatEntity dialog) {
+        jpaChatDAO.save(dialog);
     }
 }

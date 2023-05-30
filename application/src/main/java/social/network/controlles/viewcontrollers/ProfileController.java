@@ -83,6 +83,7 @@ public class ProfileController {
         model.addAttribute("response", response);
         model.addAttribute("avatar64", base64Image);
         model.addAttribute("isUserOwner", false);
+        model.addAttribute("dialogChat", response.getDialogChatDTO());
         model.addAttribute(
                 "isCurrentUserAdmin",
                 user.getAuthorities().contains(

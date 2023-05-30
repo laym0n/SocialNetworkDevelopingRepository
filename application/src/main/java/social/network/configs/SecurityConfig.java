@@ -15,6 +15,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import social.network.dto.ChatAppDTO;
 import social.network.dto.UserAppDTO;
 import social.network.entities.user.User;
 import social.network.security.UserSecurityService;
@@ -33,6 +34,7 @@ public class SecurityConfig extends GlobalAuthenticationConfigurerAdapter {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http, ResourceLoader resourceLoader) throws Exception {
         UserAppDTO.resourceLoader = resourceLoader;
+        ChatAppDTO.resourceLoader = resourceLoader;
         return http
                 .authorizeRequests()
                 .requestMatchers("/registration").permitAll()

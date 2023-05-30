@@ -147,6 +147,13 @@
                  name="idUserForUnban">
           <button type="submit">Разбанить</button>
         </form>
+        <form method="post" th:if="${!dialogChat.exist}"
+              th:action="@{/dialogchat/create}">
+          <input type="hidden" th:value="${response.getUserProfile().getOwner().getIdUser()}"
+                 name="idUser">
+          <button type="submit">Создать диалоговый чат</button>
+        </form>
+        <a th:if="${dialogChat.exist}" th:href="@{/chats/{id}(id=${dialogChat.chatId})}">Перейти к диалогу</a>
       </div>
     </div>
   </div>

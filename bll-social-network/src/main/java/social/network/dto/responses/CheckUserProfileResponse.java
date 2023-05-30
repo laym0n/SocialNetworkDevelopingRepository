@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import social.network.dto.DialogChatDTO;
 import social.network.dto.FriendDTO;
 import social.network.dto.UserRelationshipDTO;
 import social.network.entities.user.UserProfile;
@@ -19,4 +20,5 @@ public class CheckUserProfileResponse {
     private int idUser;
     private UserProfile userProfile;
     private UserRelationshipDTO userRelationshipDTO;
+    private DialogChatDTO dialogChatDTO;
 }
