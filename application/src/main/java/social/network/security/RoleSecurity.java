@@ -10,6 +10,7 @@ import org.springframework.security.core.GrantedAuthority;
 @NoArgsConstructor
 public class RoleSecurity implements GrantedAuthority {
     private String name;
+
     @Override
     public String getAuthority() {
         return name;

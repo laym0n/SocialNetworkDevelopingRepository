@@ -12,6 +12,7 @@ import social.network.jpa.dao.ChatMemberDAO;
 import social.network.jpa.dao.MessageDAO;
 import social.network.jpa.dao.UserDAO;
 import social.network.jpa.entities.ChatEntity;
+import social.network.jpa.entities.ChatMemberEntity;
 import social.network.jpa.entities.MessageEntity;
 import social.network.jpa.entities.UserEntity;
 
@@ -58,7 +59,12 @@ public class GetChatsDAServiceImpl implements GetChatsDAService {
     @Override
     public List<MessageDTO> findAllMessageDTOForChat(int idChat) {
         List<MessageEntity> messageEntities = messageDAO.findAllForChat(idChat);
-        return messageEntities.stream().map(MessageEntity::getMessageDTO).toList();
+        List<MessageDTO> messageDTOS = messageEntities.stream().map(MessageEntity::getMessageDTO).toList();
+        messageDTOS.forEach(messageDTO -> {
+            ChatMemberEntity chatMemberEntity = chatMemberDAO.findById(messageDTO.getUserIdOwner());
+            messageDTO.setUserIdOwner(chatMemberEntity.getUserId());
+        });
+        return messageDTOS;
     }
 
     @Override

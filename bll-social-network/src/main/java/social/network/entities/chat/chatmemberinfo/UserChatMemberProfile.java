@@ -1,7 +1,7 @@
 package social.network.entities.chat.chatmemberinfo;
 
-import social.network.entities.user.UserInfo;
 import lombok.Data;
+import social.network.entities.user.UserInfo;
 
 @Data
 public class UserChatMemberProfile extends ChatMemberProfile {

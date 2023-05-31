@@ -54,9 +54,10 @@ public class ProfileController {
         model.addAttribute("response", response);
         model.addAttribute("avatar64", base64Image);
         model.addAttribute("isUserOwner", true);
-        model.addAttribute("isCurrentUserAdmin", false );
+        model.addAttribute("isCurrentUserAdmin", false);
         return "profile";
     }
+
     @GetMapping("/{id}")
     public String showProfileInfo(@AuthenticationPrincipal UserSecurity user,
                                   Model model,
@@ -87,7 +88,7 @@ public class ProfileController {
         model.addAttribute(
                 "isCurrentUserAdmin",
                 user.getAuthorities().contains(
-                    new RoleSecurity(UserRole.ADMIN.name())
+                        new RoleSecurity(UserRole.ADMIN.name())
                 )
         );
         return "profile";

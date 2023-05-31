@@ -16,17 +16,19 @@ import social.network.usecases.administrateusecases.AdministrateUseCase;
 @AllArgsConstructor
 public class AdministrateController {
     private AdministrateUseCase administrateUseCase;
+
     @PostMapping("/ban")
     public String ban(@AuthenticationPrincipal UserSecurity user,
-                    @RequestParam("idUserForBan") int idUserForBan) {
+                      @RequestParam("idUserForBan") int idUserForBan) {
         administrateUseCase.banUser(
                 new BanUserRequest(user.getUserId(), idUserForBan)
         );
         return "redirect:/profile/" + idUserForBan;
     }
+
     @PostMapping("/unban")
     public String unban(@AuthenticationPrincipal UserSecurity user,
-                      @RequestParam("idUserForUnban") int idUserForUnban) {
+                        @RequestParam("idUserForUnban") int idUserForUnban) {
         administrateUseCase.unbanUser(
                 new UnbanUserRequest(user.getUserId(), idUserForUnban)
         );

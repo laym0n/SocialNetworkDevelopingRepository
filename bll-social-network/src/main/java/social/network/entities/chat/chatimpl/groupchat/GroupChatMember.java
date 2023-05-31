@@ -6,6 +6,6 @@ import java.util.Map;
 
 public class GroupChatMember extends ChatMember {
     private GroupChatMemberProfile chatMemberProfile;
-    private boolean isBlocked = false;
+    private final boolean isBlocked = false;
     private Map<Integer, ChatMemberRole> roles;
 }

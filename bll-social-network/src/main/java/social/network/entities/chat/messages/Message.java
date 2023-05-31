@@ -1,6 +1,5 @@
 package social.network.entities.chat.messages;
 
-import social.network.entities.administrateentities.Ban;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

@@ -5,16 +5,17 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
-import social.network.entities.user.*;
-import social.network.jpa.dao.UserDAO;
 import social.network.daservices.SignUpDAService;
-import social.network.jpa.entities.UserEntity;
+import social.network.entities.user.*;
 import social.network.exceptions.EntityAlreadyExistsException;
+import social.network.jpa.dao.UserDAO;
+import social.network.jpa.entities.UserEntity;
 
 import java.time.OffsetDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class SignUpDAServiceTest extends JPAIntegrationEnvironment {
@@ -22,10 +23,11 @@ public class SignUpDAServiceTest extends JPAIntegrationEnvironment {
     private SignUpDAService SUT;
     @Autowired
     private UserDAO userDAO;
+
     @Test
     @Rollback
     @Transactional
-    public void validSignUpTest(){
+    public void validSignUpTest() {
         //Assign
         OffsetDateTime lastGetUpdate = OffsetDateTime.now().minusDays(5);
         Map<Integer, UserRole> roles = new HashMap<>();
@@ -46,7 +48,7 @@ public class SignUpDAServiceTest extends JPAIntegrationEnvironment {
                                 .birthday(Optional.ofNullable(null))
                                 .build()
                 )
-                .avatar(Optional.of(new byte[] {1, 2, 3}))
+                .avatar(Optional.of(new byte[]{1, 2, 3}))
                 .owner(new UserInfo(
                         0,
                         "laym0n",
@@ -67,10 +69,11 @@ public class SignUpDAServiceTest extends JPAIntegrationEnvironment {
         Optional<UserEntity> resultFromDBByName = userDAO.findByUserName(userForArgument.getUserName());
         assertEquals(resultFromDBByName, resultFromDBById);
     }
+
     @Test
     @Rollback
     @Transactional
-    public void signUpWithAlreadyExistedUserNameTest_ExpectedEntityAlreadyExistsException(){
+    public void signUpWithAlreadyExistedUserNameTest_ExpectedEntityAlreadyExistsException() {
         //Assign
         userDAO.create(UserEntity.builder()
                 .isBlocked(false)
@@ -101,7 +104,7 @@ public class SignUpDAServiceTest extends JPAIntegrationEnvironment {
                                 .birthday(Optional.ofNullable(null))
                                 .build()
                 )
-                .avatar(Optional.of(new byte[] {1, 2, 3}))
+                .avatar(Optional.of(new byte[]{1, 2, 3}))
                 .owner(new UserInfo(
                         0,
                         "laym0n",

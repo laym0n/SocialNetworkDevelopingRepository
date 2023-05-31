@@ -16,8 +16,6 @@ import social.network.entities.chat.changeshistory.chatchangeevents.ChatDeletedE
 import social.network.entities.chat.chatimpl.privatechat.PrivateChat;
 import social.network.entities.chat.chatimpl.privatechat.PrivateChatDescription;
 import social.network.entities.chat.chatimpl.privatechat.PrivateChatProfile;
-import social.network.jpa.dao.FriendDAO;
-import social.network.jpa.dao.FriendRequestDAO;
 import social.network.jpa.dao.UserDAO;
 import social.network.jpa.entities.ChatEntity;
 import social.network.jpa.entities.EventEntity;
@@ -28,13 +26,12 @@ import social.network.jpa.jpadao.JPAChatTypeDAO;
 import social.network.jpa.jpadao.JPAEventDAO;
 import social.network.jpa.jpadao.JPAEventTypeDAO;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ManagePrivateChatsDATest extends JPAIntegrationEnvironment {
     @Autowired
@@ -63,6 +60,7 @@ public class ManagePrivateChatsDATest extends JPAIntegrationEnvironment {
                 .build();
         firstUser = userDAO.create(firstUser);
     }
+
     @ParameterizedTest
     @ArgumentsSource(CreateChatArguments.class)
     @Transactional
@@ -89,6 +87,7 @@ public class ManagePrivateChatsDATest extends JPAIntegrationEnvironment {
         assertEquals(1, eventsFromDB.size(), () -> "Db must contain 1 chat event");
         assertEquals(jpaEventTypeDAO.findByName("CHAT_CREATED").get(), eventsFromDB.get(0).getType());
     }
+
     @Test
     @Transactional
     @Rollback
@@ -99,7 +98,7 @@ public class ManagePrivateChatsDATest extends JPAIntegrationEnvironment {
                 null,
                 PrivateChatProfile
                         .builder()
-                        .avatar(Optional.of(new byte[] {1, 2, 3}))
+                        .avatar(Optional.of(new byte[]{1, 2, 3}))
                         .description(
                                 PrivateChatDescription
                                         .builder()
@@ -135,16 +134,16 @@ public class ManagePrivateChatsDATest extends JPAIntegrationEnvironment {
                         new PrivateChat(
                                 null,
                                 PrivateChatProfile
-                                    .builder()
-                                    .avatar(Optional.empty())
-                                    .description(
-                                        PrivateChatDescription
-                                            .builder()
-                                            .name("test")
-                                            .description(Optional.of("description"))
-                                            .build()
-                                    )
-                                    .build()
+                                        .builder()
+                                        .avatar(Optional.empty())
+                                        .description(
+                                                PrivateChatDescription
+                                                        .builder()
+                                                        .name("test")
+                                                        .description(Optional.of("description"))
+                                                        .build()
+                                        )
+                                        .build()
                         ),
                         ChatEntity
                                 .builder()
@@ -164,7 +163,7 @@ public class ManagePrivateChatsDATest extends JPAIntegrationEnvironment {
                                 null,
                                 PrivateChatProfile
                                         .builder()
-                                        .avatar(Optional.of(new byte[] {1, 2, 3}))
+                                        .avatar(Optional.of(new byte[]{1, 2, 3}))
                                         .description(
                                                 PrivateChatDescription
                                                         .builder()
@@ -176,7 +175,7 @@ public class ManagePrivateChatsDATest extends JPAIntegrationEnvironment {
                         ),
                         ChatEntity
                                 .builder()
-                                .avatar(new byte[] {1, 2, 3})
+                                .avatar(new byte[]{1, 2, 3})
                                 .description("description")
                                 .name("test")
                                 .isActive(true)

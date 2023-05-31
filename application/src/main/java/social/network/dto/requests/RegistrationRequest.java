@@ -5,7 +5,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.multipart.MultipartFile;
-import social.network.dto.modelsdto.UserInfoDTO;
 import social.network.entities.user.PersonalInfo;
 import social.network.entities.user.UserInfo;
 import social.network.entities.user.UserProfile;
@@ -35,6 +34,7 @@ public class RegistrationRequest {
     private String secondName = "";
     private LocalDate birthday;
     private MultipartFile avatar;
+
     public SignUpRequest getSignUpRequest() throws IOException {
         return SignUpRequest.builder()
                 .userName(userName)

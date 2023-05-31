@@ -9,21 +9,18 @@ import org.junit.jupiter.params.provider.ArgumentsSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
-import social.network.jpa.jpadao.JPAUserDAO;
-import social.network.jpa.jpadao.JPAUserRoleDAO;
 import social.network.daservices.FindUsersDAService;
 import social.network.jpa.entities.UserEntity;
 import social.network.jpa.entities.UserRoleEntity;
-import social.network.entities.user.UserInfo;
-import static org.junit.jupiter.api.Assertions.*;
+import social.network.jpa.jpadao.JPAUserDAO;
+import social.network.jpa.jpadao.JPAUserRoleDAO;
 
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class FindUsersDAServiceTest extends JPAIntegrationEnvironment {
     @Autowired
@@ -32,6 +29,7 @@ public class FindUsersDAServiceTest extends JPAIntegrationEnvironment {
     private JPAUserDAO JPAUserDAO;
     @Autowired
     private JPAUserRoleDAO JPAUserRoleDAO;
+
     @ParameterizedTest
     @ArgumentsSource(FindUsersArguments.class)
     @Transactional
@@ -54,13 +52,15 @@ public class FindUsersDAServiceTest extends JPAIntegrationEnvironment {
 //                .collect(Collectors.toSet());
 //        assertEquals(expectedInfosSet, resultFromSUTSet);
     }
+
     private void saveAllUsers(List<UserEntity> usersForSave) {
         UserRoleEntity simpleUser = JPAUserRoleDAO.findByName("SIMPLE_USER");
-        for (UserEntity userEntity : usersForSave){
+        for (UserEntity userEntity : usersForSave) {
             userEntity.getRoles().add(simpleUser);
             JPAUserDAO.save(userEntity);
         }
     }
+
     static class FindUsersArguments implements ArgumentsProvider {
         @Override
         public Stream<? extends Arguments> provideArguments(ExtensionContext context) {

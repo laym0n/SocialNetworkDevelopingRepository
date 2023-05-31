@@ -64,7 +64,7 @@ public class CheckerOwnerPrivateChatTest extends JPAIntegrationEnvironment {
                 null,
                 PrivateChatProfile
                         .builder()
-                        .avatar(Optional.of(new byte[] {1, 2, 3}))
+                        .avatar(Optional.of(new byte[]{1, 2, 3}))
                         .description(
                                 PrivateChatDescription
                                         .builder()

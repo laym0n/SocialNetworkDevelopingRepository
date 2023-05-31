@@ -24,14 +24,16 @@ import social.network.usecases.usersusecases.ManageFriendRequestsUseCase;
 public class FriendRequestController {
     private ManageFriendRequestsUseCase manageFriendRequestsUseCase;
     private CheckFriendRequestsUseCase checkFriendRequestsUseCase;
+
     @PostMapping(value = "/accept")
     public String acceptRequest(@AuthenticationPrincipal UserSecurity user,
-                                 @RequestParam("idUserSenderFriendRequest") int idUserSenderFriendRequest) {
+                                @RequestParam("idUserSenderFriendRequest") int idUserSenderFriendRequest) {
         manageFriendRequestsUseCase.acceptRequest(
                 new AcceptFriendRequestRequest(user.getUserId(), idUserSenderFriendRequest)
         );
         return "redirect:/profile/" + idUserSenderFriendRequest;
     }
+
     @PostMapping(value = "/cancel")
     public String cancelRequest(@AuthenticationPrincipal UserSecurity user,
                                 @RequestParam("idUserSenderFriendRequest") int idUserSenderFriendRequest) {
@@ -43,7 +45,7 @@ public class FriendRequestController {
 
     @PostMapping(value = "/send")
     public String sendRequest(@AuthenticationPrincipal UserSecurity user,
-                                @RequestParam("idUserToWhom") int idUserToWhom) {
+                              @RequestParam("idUserToWhom") int idUserToWhom) {
         manageFriendRequestsUseCase.sendNewRequest(
                 new SendNewFriendRequestRequest(user.getUserId(), idUserToWhom)
         );

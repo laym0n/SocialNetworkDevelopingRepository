@@ -63,6 +63,9 @@
           <a class="nav-link" href="/profile">Profile</a>
         </li>
         <li class="nav-item">
+          <a class="nav-link" href="/chats">Chats</a>
+        </li>
+        <li class="nav-item">
           <a class="nav-link" href="/friend">Friends</a>
         </li>
         <li class="nav-item">
@@ -91,9 +94,11 @@
         <a class="btn btn-primary" href="/profile/update">Update Profile</a>
       </div>
       <div class="user-actions-buttons" th:if="${!isUserOwner}">
-        <span th:if="${response.getUserRelationshipDTO().isCurrentUserInBlackList()}">
+        <div  th:if="${response.getUserRelationshipDTO().isCurrentUserInBlackList()}">
+        <span>
           Вы в черном списке этого пользователя
         </span>
+        </div>
         <form method="post" th:if="${response.getUserRelationshipDTO().isOwnerProfileInBlackList()}"
               th:action="@{/blacklist/remove}">
           <input type="hidden" th:value="${response.getUserProfile().getOwner().getIdUser()}"
@@ -140,7 +145,9 @@
                  name="idUserForBan">
           <button type="submit">Забанить</button>
         </form>
-        <span th:if="${response.getUserProfile().getOwner().isBlocked()}">Пользователь забанен</span>
+        <div  th:if="${response.getUserProfile().getOwner().isBlocked()}">
+          <span>Пользователь забанен</span>
+        </div>
         <form method="post" th:if="${isCurrentUserAdmin && response.getUserProfile().getOwner().isBlocked()}"
               th:action="@{/administrate/unban}">
           <input type="hidden" th:value="${response.getUserProfile().getOwner().getIdUser()}"

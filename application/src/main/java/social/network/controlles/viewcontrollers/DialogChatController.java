@@ -3,14 +3,12 @@ package social.network.controlles.viewcontrollers;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import social.network.dto.requests.CreateDialogChatRequest;
-import social.network.dto.requests.CreatePrivateChatAppRequest;
-import social.network.dto.requests.CreatePrivateChatRequest;
 import social.network.security.UserSecurity;
 import social.network.usecases.chatsusecases.ManageDialogsChatsUseCase;
-import social.network.usecases.chatsusecases.ManagePrivateChatsUseCase;
 
 import java.io.IOException;
 

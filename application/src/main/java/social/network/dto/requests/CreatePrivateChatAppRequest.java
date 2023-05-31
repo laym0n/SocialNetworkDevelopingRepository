@@ -19,13 +19,14 @@ public class CreatePrivateChatAppRequest {
     private String name = "";
     private String description = "";
     private MultipartFile avatar;
+
     public PrivateChatProfile getPrivateChatProfile() throws IOException {
         return new PrivateChatProfile(
                 new PrivateChatDescription(
                         name,
                         Optional.ofNullable(description)
                 ),
-                Optional.ofNullable(avatar == null || avatar.getBytes().length == 0 ? null: avatar.getBytes())
+                Optional.ofNullable(avatar == null || avatar.getBytes().length == 0 ? null : avatar.getBytes())
         );
     }
 

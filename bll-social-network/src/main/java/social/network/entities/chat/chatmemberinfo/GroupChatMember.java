@@ -1,9 +1,9 @@
 package social.network.entities.chat.chatmemberinfo;
 
-import social.network.entities.chat.chatimpl.groupchat.ChatMemberRole;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import social.network.entities.chat.chatimpl.groupchat.ChatMemberRole;
 
 import java.util.Map;
 

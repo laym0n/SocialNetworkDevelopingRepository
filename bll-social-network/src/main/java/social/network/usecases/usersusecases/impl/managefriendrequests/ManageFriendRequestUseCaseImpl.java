@@ -9,15 +9,19 @@ import social.network.dto.requests.SendNewFriendRequestRequest;
 import social.network.exceptions.EntityAlreadyExistsException;
 import social.network.exceptions.UserInBlackListException;
 import social.network.usecases.usersusecases.ManageFriendRequestsUseCase;
+import social.network.usecases.usersusecases.impl.managefriends.ManageFriendsUseCaseImpl;
 
 import java.security.InvalidParameterException;
+import java.util.logging.Logger;
 
 @Service
 @AllArgsConstructor
 public class ManageFriendRequestUseCaseImpl implements ManageFriendRequestsUseCase {
+    private static Logger log = Logger.getLogger(ManageFriendRequestUseCaseImpl.class.getName());
     private ManageFriendsRequestsDAService daService;
     @Override
     public void sendNewRequest(SendNewFriendRequestRequest request) {
+        log.info("Get SendNewFriendRequestRequest " + request);
         checkIfFriendRequestIsForYourself(request.getIdUserSenderRequest(), request.getIdUserForWhomRequest());
         boolean isFriendRelationshipAlreadyExist = daService
                 .isExistFriendRelationship(request.getIdUserSenderRequest(), request.getIdUserForWhomRequest());

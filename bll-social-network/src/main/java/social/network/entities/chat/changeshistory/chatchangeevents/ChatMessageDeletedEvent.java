@@ -1,8 +1,7 @@
 package social.network.entities.chat.changeshistory.chatchangeevents;
 
-import social.network.entities.chat.changeshistory.ChatChangeEvent;
-import social.network.entities.chat.changeshistory.ChatChangeEventType;
 import lombok.Data;
+import social.network.entities.chat.changeshistory.ChatChangeEvent;
 
 @Data
 public class ChatMessageDeletedEvent extends ChatChangeEvent {

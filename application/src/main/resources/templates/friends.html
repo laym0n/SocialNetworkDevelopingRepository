@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Profile</title>
+  <title>Friends</title>
   <link rel="icon" type="image/x-icon" href="">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <style>
@@ -63,6 +63,9 @@
           <a class="nav-link" href="/profile">Profile</a>
         </li>
         <li class="nav-item">
+          <a class="nav-link" href="/chats">Chats</a>
+        </li>
+        <li class="nav-item">
           <a class="nav-link" href="/friend">Friends</a>
         </li>
         <li class="nav-item">
@@ -76,19 +79,21 @@
         </li>
       </ul>
     </div>
-    <div th:each="user : ${users}">
-      <a th:href="@{/profile/{id}(id=${user.userId})}">
-      <img width="50" height="50"
-           th:src="|data:image/png;base64,${user.avatar}|"
-           alt="Avatar">
-      <span th:text="${user.firstName + ' ' + user.secondName}"></span>
-      </a>
-      <form method="post"
-            th:action="@{/friend/delete}">
-        <input type="hidden" th:value="${user.getUserId()}"
-               name="idUserFriend">
-        <button type="submit">Удалить друга</button>
-      </form>
+    <div>
+      <div th:each="user : ${users}"  style="margin: 20px">
+        <a th:href="@{/profile/{id}(id=${user.userId})}">
+          <img width="50" height="50"
+               th:src="|data:image/png;base64,${user.avatar}|"
+               alt="Avatar">
+          <span th:text="${user.firstName + ' ' + user.secondName}"></span>
+        </a>
+        <form method="post"
+              th:action="@{/friend/delete}">
+          <input type="hidden" th:value="${user.getUserId()}"
+                 name="idUserFriend">
+          <button type="submit">Удалить друга</button>
+        </form>
+      </div>
     </div>
   </div>
 </div>

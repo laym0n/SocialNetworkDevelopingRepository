@@ -14,9 +14,9 @@ import java.util.List;
 public class ChatMemberDAO {
     @PersistenceContext
     private EntityManager entityManager;
-    private JPAChatMemberDAO chatMemberDAO;
+    private JPAChatMemberDAO jpaChatMemberDAO;
     public void create(ChatMemberEntity newChatMemberEntity) {
-        chatMemberDAO.save(newChatMemberEntity);
+        jpaChatMemberDAO.save(newChatMemberEntity);
     }
 
     public Integer findIdUserChatMemberOfChat(int idPrivateChat) {
@@ -27,5 +27,9 @@ public class ChatMemberDAO {
     public List<Integer> findAllChatIdsWithUser(int idUser) {
         return entityManager.createQuery("select cm.chatId from ChatMemberEntity cm " +
                 "where cm.userId = :id").setParameter("id", idUser).getResultList();
+    }
+
+    public ChatMemberEntity findById(int chatMemberId) {
+        return jpaChatMemberDAO.findById(chatMemberId).get();
     }
 }

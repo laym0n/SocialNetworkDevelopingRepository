@@ -6,7 +6,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import social.network.dto.requests.RegistrationRequest;
 import social.network.dto.requests.SignUpRequest;
 import social.network.usecases.usersusecases.SignUpUseCase;
@@ -25,6 +27,7 @@ public class SignUpController {
         model.addAttribute("request", new RegistrationRequest());
         return "registration";
     }
+
     @PostMapping(value = "/registration")
     public String signUp(@ModelAttribute RegistrationRequest request, Model model) throws IOException {
         SignUpRequest signUpRequest = request.getSignUpRequest();
@@ -35,7 +38,7 @@ public class SignUpController {
             model.addAttribute("userExists", true);
             model.addAttribute("request", request);
             return "registration";
-        } catch (Exception ex){
+        } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
 

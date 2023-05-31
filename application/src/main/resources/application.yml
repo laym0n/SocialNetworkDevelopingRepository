@@ -6,9 +6,6 @@ spring:
     driverClassName: org.postgresql.Driver
   thymeleaf:
     suffix: .html
-
-#spring.mvc.view.prefix = /WEB-INF/jsp/
 server:
   servlet:
     context-path: /
-#    spring.mvc.view.suffix = .jsp

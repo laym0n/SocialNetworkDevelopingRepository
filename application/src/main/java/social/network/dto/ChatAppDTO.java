@@ -17,6 +17,7 @@ public class ChatAppDTO {
     private int chatId;
     private String name;
     private String avatar;
+
     public ChatAppDTO(ChatDescriptionDTO descriptionDTO) {
         this.chatId = descriptionDTO.getChatId();
         this.name = descriptionDTO.getName();

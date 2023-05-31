@@ -9,7 +9,6 @@ import social.network.entities.socialnetworkuser.HumanUser;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.Base64;
-import java.util.Optional;
 
 @Data
 @AllArgsConstructor
@@ -20,18 +19,19 @@ public class UserAppDTO {
     private String firstName;
     private String secondName;
     private String avatar;
+
     public UserAppDTO(HumanUser humanUser) {
         this.userId = humanUser.getUserInfo().getIdUser();
         this.avatar = Base64.getEncoder().encodeToString(
                 humanUser.getAvatar().orElseGet(() -> {
-            try {
-                return Files.readAllBytes(
-                        resourceLoader.getResource("classpath:User.png").getFile().toPath()
-                );
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }));
+                    try {
+                        return Files.readAllBytes(
+                                resourceLoader.getResource("classpath:User.png").getFile().toPath()
+                        );
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }));
         if (avatar.equals("")) {
             try {
                 avatar = Base64.getEncoder().encodeToString(Files.readAllBytes(

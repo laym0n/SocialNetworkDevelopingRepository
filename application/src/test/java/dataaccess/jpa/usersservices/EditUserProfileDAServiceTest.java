@@ -12,15 +12,15 @@ import org.springframework.transaction.annotation.Transactional;
 import social.network.entities.user.PersonalInfo;
 import social.network.jpa.dao.UserDAO;
 import social.network.jpa.entities.UserEntity;
-import social.network.entities.user.UserInfo;
-import social.network.entities.user.UserProfile;
 import social.network.jpa.implbllservices.usersservices.EditUserProfileDAServiceImpl;
 
-import static org.junit.jupiter.api.Assertions.*;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.util.Optional;
 import java.util.stream.Stream;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class EditUserProfileDAServiceTest extends JPAIntegrationEnvironment {
     @Autowired
@@ -32,7 +32,7 @@ public class EditUserProfileDAServiceTest extends JPAIntegrationEnvironment {
     @ArgumentsSource(ValidUpdateProfileArguments.class)
     @Transactional
     @Rollback
-    void testValidUpdateProfile(UserEntity userForSave, PersonalInfo argumentForSUT, UserEntity expectedEntity){
+    void testValidUpdateProfile(UserEntity userForSave, PersonalInfo argumentForSUT, UserEntity expectedEntity) {
         //Assign
         userForSave = userDAO.create(userForSave);
         expectedEntity.setId(userForSave.getId());
@@ -50,7 +50,7 @@ public class EditUserProfileDAServiceTest extends JPAIntegrationEnvironment {
     @ArgumentsSource(ValidUpdateAvatarArguments.class)
     @Transactional
     @Rollback
-    void testValidUpdateAvatar(UserEntity userForSave, Optional<byte[]> argumentForSUT, UserEntity expectedEntity){
+    void testValidUpdateAvatar(UserEntity userForSave, Optional<byte[]> argumentForSUT, UserEntity expectedEntity) {
         //Assign
         userForSave = userDAO.create(userForSave);
         expectedEntity.setId(userForSave.getId());
@@ -63,6 +63,7 @@ public class EditUserProfileDAServiceTest extends JPAIntegrationEnvironment {
         assertTrue(resultFromDB.isPresent(), () -> "User must be found");
         assertEquals(expectedEntity, resultFromDB.get());
     }
+
     static class ValidUpdateProfileArguments implements ArgumentsProvider {
         @Override
         public Stream<? extends Arguments> provideArguments(ExtensionContext context) {
@@ -79,7 +80,7 @@ public class EditUserProfileDAServiceTest extends JPAIntegrationEnvironment {
                                 .secondName("secondName")
                                 .lastGetUpdatesTime(lastGetUpdateTime)
                                 .birthday(null)
-                                .avatar(new byte[] {1, 2, 3, 4})
+                                .avatar(new byte[]{1, 2, 3, 4})
                                 .build(),
                         PersonalInfo
                                 .builder()
@@ -95,7 +96,7 @@ public class EditUserProfileDAServiceTest extends JPAIntegrationEnvironment {
                                 .secondName("secondName1")
                                 .lastGetUpdatesTime(lastGetUpdateTime)
                                 .birthday(newBirthday)
-                                .avatar(new byte[] {1, 2, 3, 4})
+                                .avatar(new byte[]{1, 2, 3, 4})
                                 .build()
                 );
             }
@@ -104,6 +105,7 @@ public class EditUserProfileDAServiceTest extends JPAIntegrationEnvironment {
             );
         }
     }
+
     static class ValidUpdateAvatarArguments implements ArgumentsProvider {
         @Override
         public Stream<? extends Arguments> provideArguments(ExtensionContext context) {
@@ -119,9 +121,9 @@ public class EditUserProfileDAServiceTest extends JPAIntegrationEnvironment {
                                 .secondName("secondName")
                                 .lastGetUpdatesTime(lastGetUpdateTime)
                                 .birthday(null)
-                                .avatar(new byte[] {1, 2, 3, 4})
+                                .avatar(new byte[]{1, 2, 3, 4})
                                 .build(),
-                        Optional.of(new byte[] { 1 }),
+                        Optional.of(new byte[]{1}),
                         UserEntity
                                 .builder()
                                 .userName("userName")
@@ -130,7 +132,7 @@ public class EditUserProfileDAServiceTest extends JPAIntegrationEnvironment {
                                 .secondName("secondName")
                                 .lastGetUpdatesTime(lastGetUpdateTime)
                                 .birthday(null)
-                                .avatar(new byte[] {1})
+                                .avatar(new byte[]{1})
                                 .build()
                 );
             }
@@ -146,7 +148,7 @@ public class EditUserProfileDAServiceTest extends JPAIntegrationEnvironment {
                                 .secondName("secondName")
                                 .lastGetUpdatesTime(lastGetUpdateTime)
                                 .birthday(null)
-                                .avatar(new byte[] { 1 })
+                                .avatar(new byte[]{1})
                                 .build(),
                         Optional.ofNullable(null),
                         UserEntity

@@ -9,16 +9,17 @@ import org.springframework.transaction.annotation.Transactional;
 import social.network.jpa.dao.FriendDAO;
 import social.network.jpa.dao.FriendRequestDAO;
 import social.network.jpa.dao.UserDAO;
-import social.network.jpa.dao.UsersBlackListDAO;
 import social.network.jpa.entities.FriendEntity;
 import social.network.jpa.entities.FriendRequestEntity;
 import social.network.jpa.entities.UserEntity;
 import social.network.jpa.entities.ids.FriendEntityId;
 import social.network.jpa.entities.ids.FriendRequestEntityId;
 import social.network.jpa.implbllservices.usersservices.JPAFriendRelationshipsHandlerDAService;
-import static org.junit.jupiter.api.Assertions.*;
+
 import java.time.OffsetDateTime;
 import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class FriendRelationshipsHandlerDAServiceTest extends JPAIntegrationEnvironment {
     @Autowired
@@ -53,6 +54,7 @@ public class FriendRelationshipsHandlerDAServiceTest extends JPAIntegrationEnvir
                 .build();
         secondUser = userDAO.create(secondUser);
     }
+
     @Test
     @Transactional
     @Rollback
@@ -75,6 +77,7 @@ public class FriendRelationshipsHandlerDAServiceTest extends JPAIntegrationEnvir
                 friendRequestDAO.findById(new FriendRequestEntityId(firstUser.getId(), secondUser.getId()));
         assertTrue(friendRequestFromDB.isEmpty(), () -> "Friend request must not exist in db");
     }
+
     @Test
     @Transactional
     @Rollback

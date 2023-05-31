@@ -10,16 +10,20 @@ import social.network.entities.chat.changeshistory.chatchangeevents.ChatDeletedE
 import social.network.entities.chat.chatimpl.privatechat.PrivateChat;
 import social.network.services.CheckerOwnerPrivateChat;
 import social.network.usecases.chatsusecases.ManagePrivateChatsUseCase;
+import social.network.usecases.chatsusecases.impl.managedialogschats.ManageDialogsChatsUseCaseImpl;
 
 import java.security.InvalidParameterException;
+import java.util.logging.Logger;
 
 @Service
 @AllArgsConstructor
 public class ManagePrivateChatsUseCaseImpl implements ManagePrivateChatsUseCase {
+    private static Logger log = Logger.getLogger(ManagePrivateChatsUseCaseImpl.class.getName());
     private ManagePrivateChatsDAService daService;
     private CheckerOwnerPrivateChat checkerOwnerPrivateChat;
     @Override
     public void createPrivateChat(CreatePrivateChatRequest request) {
+        log.info("Get CreatePrivateChatRequest " + request);
         ChatCreatedEvent event = new ChatCreatedEvent();
         PrivateChat newPrivateChat = new PrivateChat(null, request.getNewPrivateChatProfile());
         daService.createPrivateChatForUserAndSaveEvent(
@@ -31,6 +35,7 @@ public class ManagePrivateChatsUseCaseImpl implements ManagePrivateChatsUseCase 
 
     @Override
     public void deletePrivateChat(DeletePrivateChatRequest request) {
+        log.info("Get DeletePrivateChatRequest " + request);
         checkerOwnerPrivateChat.checkIfUserIsOwnerOfPrivateChat(
                 request.getIdUserSenderRequest(),
                 request.getIdPrivateChat()

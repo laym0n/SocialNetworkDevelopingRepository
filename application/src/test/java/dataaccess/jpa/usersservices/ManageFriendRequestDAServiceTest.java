@@ -6,6 +6,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
+import social.network.entities.usersrelationships.friends.FriendRequest;
+import social.network.exceptions.EntityAlreadyExistsException;
+import social.network.exceptions.EntityNotFoundException;
 import social.network.jpa.dao.FriendDAO;
 import social.network.jpa.dao.FriendRequestDAO;
 import social.network.jpa.dao.UserDAO;
@@ -17,9 +20,6 @@ import social.network.jpa.entities.UserEntity;
 import social.network.jpa.entities.ids.BlackListUserEntityId;
 import social.network.jpa.entities.ids.FriendEntityId;
 import social.network.jpa.entities.ids.FriendRequestEntityId;
-import social.network.entities.usersrelationships.friends.FriendRequest;
-import social.network.exceptions.EntityAlreadyExistsException;
-import social.network.exceptions.EntityNotFoundException;
 import social.network.jpa.implbllservices.usersservices.JPAManageFriendRequestsDAService;
 
 import java.time.OffsetDateTime;
@@ -251,6 +251,7 @@ public class ManageFriendRequestDAServiceTest extends JPAIntegrationEnvironment 
         //Assert
         assertFalse(resultFromSUT);
     }
+
     @Test
     @Transactional
     @Rollback
@@ -282,10 +283,11 @@ public class ManageFriendRequestDAServiceTest extends JPAIntegrationEnvironment 
         );
         assertTrue(
                 friendEntityFromDB.getId().equals(new FriendEntityId(firstUser.getId(), secondUser.getId()))
-                 ^ friendEntityFromDB.getId().equals(new FriendEntityId(secondUser.getId(), firstUser.getId())),
+                        ^ friendEntityFromDB.getId().equals(new FriendEntityId(secondUser.getId(), firstUser.getId())),
                 () -> "Ids not equal in friends"
         );
     }
+
     @Test
     @Transactional
     @Rollback

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Cup of tea</title>
+    <title>Chats</title>
     <link rel="icon" type="image/x-icon" href="">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <style>
@@ -49,6 +49,9 @@
                     <a class="nav-link" href="/profile">Profile</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="/chats">Chats</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="/friend">Friends</a>
                 </li>
                 <li class="nav-item">
@@ -62,17 +65,18 @@
                 </li>
             </ul>
         </div>
-        <a href="/privatechat/create">Создать приватный чат</a>
-
-        <div class="chat-item" th:each="chat : ${chats}">
-            <a  th:href="@{/chats/{id}(id=${chat.chatId})}">
-                <img width="50" height="50"
-                     th:src="|data:image/png;base64,${chat.avatar}|"
-                     alt="Avatar">
-                <span th:text="${chat.name}"></span>
-            </a>
-        </div>
-        <div class="col-md-9 chat-list">
+        <div>
+            <div style="margin: 20px">
+                <a href="/privatechat/create">Создать приватный чат</a>
+            </div>
+            <div class="chat-item" th:each="chat : ${chats}" style="margin: 20px">
+                <a  th:href="@{/chats/{id}(id=${chat.chatId})}">
+                    <img width="50" height="50"
+                         th:src="|data:image/png;base64,${chat.avatar}|"
+                         alt="Avatar">
+                    <span th:text="${chat.name}"></span>
+                </a>
+            </div>
         </div>
     </div>
 </div>

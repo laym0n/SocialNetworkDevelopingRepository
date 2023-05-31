@@ -6,20 +6,21 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
+import social.network.entities.usersrelationships.blacklist.BlackListRelationship;
+import social.network.exceptions.EntityAlreadyExistsException;
+import social.network.exceptions.EntityNotFoundException;
 import social.network.jpa.dao.UserDAO;
 import social.network.jpa.dao.UsersBlackListDAO;
 import social.network.jpa.entities.BlackListUserEntity;
 import social.network.jpa.entities.UserEntity;
 import social.network.jpa.entities.ids.BlackListUserEntityId;
-import social.network.entities.usersrelationships.blacklist.BlackListRelationship;
-import social.network.exceptions.EntityAlreadyExistsException;
-import social.network.exceptions.EntityNotFoundException;
 import social.network.jpa.implbllservices.usersservices.JPAManageBlackListDAService;
 
-import static org.junit.jupiter.api.Assertions.*;
 import java.time.OffsetDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ManageBlackListDAServiceTest extends JPAIntegrationEnvironment {
     @Autowired
@@ -52,10 +53,11 @@ public class ManageBlackListDAServiceTest extends JPAIntegrationEnvironment {
                 .build();
         secondUser = userDAO.create(secondUser);
     }
+
     @Test
     @Transactional
     @Rollback
-    public void validAddToBlackList(){
+    public void validAddToBlackList() {
         //Assign
         OffsetDateTime whenAdded = OffsetDateTime.now().minusDays(5);
         BlackListRelationship blackListRelationshipForSave = BlackListRelationship
@@ -82,10 +84,11 @@ public class ManageBlackListDAServiceTest extends JPAIntegrationEnvironment {
         blackListRelationshipForSave.setWhenAdded(whenAdded.truncatedTo(ChronoUnit.MINUTES));
         assertEquals(entityFromDB, new BlackListUserEntity(blackListRelationshipForSave));
     }
+
     @Test
     @Transactional
     @Rollback
-    public void addToBlackListUserThatAlreadyInList_ExpectedEntityAlreadyExistsException(){
+    public void addToBlackListUserThatAlreadyInList_ExpectedEntityAlreadyExistsException() {
         //Assign
         OffsetDateTime whenAdded = OffsetDateTime.now().minusDays(5);
         BlackListRelationship blackListRelationshipForSave = BlackListRelationship
@@ -114,10 +117,11 @@ public class ManageBlackListDAServiceTest extends JPAIntegrationEnvironment {
         blackListRelationshipForSave.setWhenAdded(whenAdded.truncatedTo(ChronoUnit.MINUTES));
         assertEquals(entityFromDB, new BlackListUserEntity(blackListRelationshipForSave));
     }
+
     @Test
     @Transactional
     @Rollback
-    public void validRemoveFromBlackList(){
+    public void validRemoveFromBlackList() {
         //Assign
         OffsetDateTime whenAdded = OffsetDateTime.now().minusDays(5);
         BlackListRelationship blackListRelationshipForSave = BlackListRelationship
@@ -140,10 +144,11 @@ public class ManageBlackListDAServiceTest extends JPAIntegrationEnvironment {
         );
         assertTrue(resultFromDB.isEmpty(), () -> "BlackListUserEntity must not be found");
     }
+
     @Test
     @Transactional
     @Rollback
-    public void removeFromBlackListUserThatIsNotInList_ExpectedEntityNotFoundException(){
+    public void removeFromBlackListUserThatIsNotInList_ExpectedEntityNotFoundException() {
         //Assign
         OffsetDateTime whenAdded = OffsetDateTime.now().minusDays(5);
         BlackListRelationship blackListRelationshipForSave = BlackListRelationship

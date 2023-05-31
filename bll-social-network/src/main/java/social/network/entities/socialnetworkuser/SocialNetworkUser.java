@@ -11,5 +11,6 @@ import java.util.Optional;
 @NoArgsConstructor
 public abstract class SocialNetworkUser {
     private Optional<byte[]> avatar;
+
     public abstract String getName();
 }

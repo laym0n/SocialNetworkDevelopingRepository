@@ -9,21 +9,23 @@ import social.network.entities.usersrelationships.blacklist.BlackListRelationshi
 import social.network.usecases.usersusecases.ManageBlackListUseCase;
 
 import java.security.InvalidParameterException;
+import java.util.logging.Logger;
 
 @AllArgsConstructor
 public class ManageBlackListUseCaseImpl implements ManageBlackListUseCase {
+    private static Logger log = Logger.getLogger(ManageBlackListUseCaseImpl.class.getName());
     private ManageBlackListDAService daService;
-    private HandlerAddingToBlackList handlerAddingToBlackList;
     @Override
     public void addUserToBlackList(AddUserToBlackListRequest request) {
+        log.info("Get AddUserToBlackListRequest " + request);
         checkIfUserIdsEqual(request.getIdUserForAddToBlackList(), request.getIdUserSenderRequest());
         BlackListRelationship newBlackListRelationship = request.getBlackListRelationship();
         daService.saveBlackListRelationshipAndCheckAlreadyExists(newBlackListRelationship);
-        handlerAddingToBlackList.handle(newBlackListRelationship);
     }
 
     @Override
     public void removeFromBlackList(RemoveUserFromBlackListRequest request) {
+        log.info("Get RemoveUserFromBlackListRequest " + request);
         checkIfUserIdsEqual(request.getIdUserForRemoveFromBlackList(), request.getIdUserSenderRequest());
         daService.deleteBlackListRelationship(request.getBlackListRelationship());
     }

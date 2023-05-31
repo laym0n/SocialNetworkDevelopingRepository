@@ -1,21 +1,18 @@
 package dataaccess.jpa.chatsservices;
 
 import dataaccess.jpa.JPAIntegrationEnvironment;
-import org.checkerframework.checker.units.qual.A;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 import social.network.entities.chat.changeshistory.chatchangeevents.ChatCreatedEvent;
-import social.network.entities.chat.changeshistory.chatchangeevents.ChatDeletedEvent;
 import social.network.entities.chat.changeshistory.chatchangeevents.ChatInfoChangedEvent;
 import social.network.entities.chat.chatimpl.privatechat.PrivateChat;
 import social.network.entities.chat.chatimpl.privatechat.PrivateChatDescription;
 import social.network.entities.chat.chatimpl.privatechat.PrivateChatProfile;
 import social.network.jpa.dao.UserDAO;
 import social.network.jpa.entities.ChatEntity;
-import social.network.jpa.entities.EventEntity;
 import social.network.jpa.entities.UserEntity;
 import social.network.jpa.implbllservices.chatsservices.EditPrivateChatDAServiceImpl;
 import social.network.jpa.implbllservices.chatsservices.ManagePrivateChatsDAServiceImpl;
@@ -26,7 +23,6 @@ import social.network.jpa.jpadao.JPAEventTypeDAO;
 
 import java.time.OffsetDateTime;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -60,6 +56,7 @@ public class EditPrivateChatDAServiceTest extends JPAIntegrationEnvironment {
                 .build();
         firstUser = userDAO.create(firstUser);
     }
+
     @Test
     @Transactional
     @Rollback
@@ -70,7 +67,7 @@ public class EditPrivateChatDAServiceTest extends JPAIntegrationEnvironment {
                 null,
                 PrivateChatProfile
                         .builder()
-                        .avatar(Optional.of(new byte[] {1, 2, 3}))
+                        .avatar(Optional.of(new byte[]{1, 2, 3}))
                         .description(
                                 PrivateChatDescription
                                         .builder()
@@ -87,15 +84,16 @@ public class EditPrivateChatDAServiceTest extends JPAIntegrationEnvironment {
         //Action
         SUT.updatePrivateChatAvatarOfUserAndSaveEvent(
                 privateChat.getId(),
-                Optional.ofNullable(new byte[] {1}),
+                Optional.ofNullable(new byte[]{1}),
                 eventForArgument
         );
 
         //Assert
         Optional<ChatEntity> chatEntityFromDB = jpaChatDAO.findById(privateChat.getId());
         assertTrue(chatEntityFromDB.isPresent(), () -> "Private chat must exist");
-        assertTrue(Arrays.equals(new byte[] {1}, chatEntityFromDB.get().getAvatar()));
+        assertArrayEquals(new byte[]{1}, chatEntityFromDB.get().getAvatar());
     }
+
     @Test
     @Transactional
     @Rollback
@@ -106,7 +104,7 @@ public class EditPrivateChatDAServiceTest extends JPAIntegrationEnvironment {
                 null,
                 PrivateChatProfile
                         .builder()
-                        .avatar(Optional.of(new byte[] {1, 2, 3}))
+                        .avatar(Optional.of(new byte[]{1, 2, 3}))
                         .description(
                                 PrivateChatDescription
                                         .builder()

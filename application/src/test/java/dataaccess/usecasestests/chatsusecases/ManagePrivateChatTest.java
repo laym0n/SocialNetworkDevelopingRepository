@@ -31,18 +31,18 @@ public class ManagePrivateChatTest extends JPAIntegrationEnvironment {
 
     @BeforeEach
     public void saveUser(){
-        savedUser = UserEntity.builder()
-                .userName("user")
-                .password("pass")
-                .roles(List.of(
-                        JPAUserRoleDAO.findByName("SIMPLE_USER")
-                ))
-                .isBlocked(false)
-                .firstName("Виктор")
-                .secondName("Кочнев")
-                .lastGetUpdatesTime(OffsetDateTime.now())
-                .build();
-        JPAUserDAO.save(savedUser);
+//        savedUser = UserEntity.builder()
+//                .userName("user")
+//                .password("pass")
+//                .roles(List.of(
+//                        JPAUserRoleDAO.findByName("SIMPLE_USER")
+//                ))
+//                .isBlocked(false)
+//                .firstName("Виктор")
+//                .secondName("Кочнев")
+//                .lastGetUpdatesTime(OffsetDateTime.now())
+//                .build();
+//        JPAUserDAO.save(savedUser);
     }
 
     @Test
